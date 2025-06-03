@@ -1,0 +1,420 @@
+---
+// src/components/IVACalculator.astro
+// No hay JavaScript de servidor en el frontmatter para este componente,
+// ya que toda la lógica es del lado del cliente (navegador).
+---
+
+<div id="calculadora-iva">
+  <div class="box">
+    <div class="buttons_calc">
+      <!-- **CAMBIO AQUÍ**: Eliminado onclick -->
+      <button id="btn-box1" class="active"><h2>Sumar IVA</h2></button>
+      <button id="btn-box2"><h2>Restar IVA</h2></button>
+    </div>
+    
+    <div id="box1" class="box_calcu active">
+      <form id="add-iva-form">
+        <div class="form-group">
+          <label for="add-amount"><strong>Precio sin IVA:</strong></label>
+          <input type="number" id="add-amount" value="100" placeholder="Introduce la cantidad" required>
+        </div>
+        <label><strong>Porcentaje de IVA:</strong></label>
+        <div class="radio-group">
+          <label><input type="radio" name="add-iva-rate" value="21" checked> <span>21%</span></label>
+          <label><input type="radio" name="add-iva-rate" value="10"> <span>10%</span></label>
+          <label><input type="radio" name="add-iva-rate" value="4"> <span>4%</span></label>
+          <label><input type="radio" name="add-iva-rate" value="custom"> <span>Otro</span></label>
+          <input type="number" id="add-custom-iva-rate" min="0" max="100" class="custom-rate" placeholder="Introduce % IVA">
+        </div>
+        <button class="boton-calcular" type="submit"><strong>Calcular IVA</strong></button>
+      </form>
+      <div id="add-result" class="result">
+        <div id="add_results_numbs" class="results_numbs">
+          100.00 €<br/>
+          21.00 €<br/>
+          121.00 € 
+        </div>
+        <div class="results_texts">
+          <strong>Cantidad sin IVA</strong> <br/>
+          <strong>IVA</strong><br/>
+          <strong>Total con IVA</strong> 
+        </div>
+      </div>
+    </div>
+    
+    <div id="box2" class="box_calcu">
+      <form id="subtract-iva-form">
+        <div class="form-group">
+          <label for="subtract-amount"><strong>Precio con IVA:</strong></label>
+          <input type="number" id="subtract-amount" value="100"  placeholder="Introduce la cantidad" required>
+        </div>
+        <label><strong>Porcentaje de IVA:</strong></label>
+        <div class="radio-group">
+          <label><input type="radio" name="subtract-iva-rate" value="21" checked> <span>21%</span></label>
+          <label><input type="radio" name="subtract-iva-rate" value="10"> <span>10%</span></label>
+          <label><input type="radio" name="subtract-iva-rate" value="4"> <span>4%</span></label>
+          <label><input type="radio" name="subtract-iva-rate" value="custom"> <span>Otro</span></label>
+          <input type="number" id="subtract-custom-iva-rate" min="0" max="100" class="custom-rate" placeholder="Introduce % IVA">
+        </div>
+        <button class="boton-calcular" type="submit"><strong>Calcular IVA</strong></button>
+      </form>
+      <div id="subtract-result" class="result">
+        <div class="results_texts">
+          <strong>Cantidad con IVA</strong> <br/>
+          <strong>IVA</strong><br/>
+          <strong>Total sin IVA</strong> 
+        </div>
+        <div id="sub_results_numbs" class="results_numbs">
+          100.00 €<br/>
+          17.36 €<br/>
+          82.64 € 
+        </div>
+      </div>
+    </div>
+  </div>
+</div> 
+
+<script>
+  // Todo el código JavaScript ahora está dentro de DOMContentLoaded
+  // para asegurar que el DOM esté completamente cargado.
+  document.addEventListener('DOMContentLoaded', function() {
+    // Referencias a los inputs de tasa de IVA personalizados
+    const customAddRateInput = document.getElementById('add-custom-iva-rate') as HTMLInputElement | null;
+    const customSubtractRateInput = document.getElementById('subtract-custom-iva-rate') as HTMLInputElement | null;
+    
+    // Ocultar inputs de tasa personalizada inicialmente
+    if (customAddRateInput) {
+      customAddRateInput.style.display = 'none';
+    }
+    if (customSubtractRateInput) {
+      customSubtractRateInput.style.display = 'none';
+    }
+
+    // *** NUEVA FUNCIÓN PARA CAMBIAR LAS CAJAS Y BOTONES (antes showBox) ***
+    function handleBoxSwitch(boxToShowId: string, buttonToActivateId: string) {
+      console.log(`handleBoxSwitch llamada. boxId: ${boxToShowId}, btnId: ${buttonToActivateId}`);
+
+      // Ocultar todas las cajas
+      const boxes = document.querySelectorAll<HTMLElement>('.box_calcu');
+      boxes.forEach(function(box) {
+        box.classList.remove('active');
+      });
+
+      // Mostrar la caja seleccionada
+      const selectedBox = document.getElementById(boxToShowId);
+      if (selectedBox) {
+        selectedBox.classList.add('active');
+      } else {
+        console.error(`ERROR: Caja con ID "${boxToShowId}" no encontrada.`);
+      }
+
+      // Desactivar todos los botones dentro de .buttons_calc
+      const buttons = document.querySelectorAll<HTMLButtonElement>('.buttons_calc button'); 
+      buttons.forEach(function(button) {
+        button.classList.remove('active');
+      });
+
+      // Activar el botón seleccionado
+      const selectedButton = document.getElementById(buttonToActivateId);
+      if (selectedButton) {
+        selectedButton.classList.add('active');
+      } else {
+        console.error(`ERROR: Botón con ID "${buttonToActivateId}" no encontrado.`);
+      }
+    }
+
+    // *** NUEVO: Adjuntar EventListeners a los botones "Sumar IVA" y "Restar IVA" ***
+    const btnBox1 = document.getElementById('btn-box1') as HTMLButtonElement | null;
+    const btnBox2 = document.getElementById('btn-box2') as HTMLButtonElement | null;
+
+    if (btnBox1) {
+      btnBox1.addEventListener('click', () => handleBoxSwitch('box1', 'btn-box1'));
+    } else {
+      console.warn('Botón #btn-box1 no encontrado. La interactividad de la pestaña puede fallar.');
+    }
+
+    if (btnBox2) {
+      btnBox2.addEventListener('click', () => handleBoxSwitch('box2', 'btn-box2'));
+    } else {
+      console.warn('Botón #btn-box2 no encontrado. La interactividad de la pestaña puede fallar.');
+    }
+
+    // Manejo de cambios en los radios de "Sumar IVA"
+    document.querySelectorAll<HTMLInputElement>('input[name="add-iva-rate"]').forEach((input) => {
+      input.addEventListener('change', function(event) {
+        const target = event.target as HTMLInputElement;
+        if (customAddRateInput) {
+          customAddRateInput.style.display = target.value === 'custom' ? 'inline-block' : 'none';
+        }
+      });
+    });
+
+    // Manejo de cambios en los radios de "Restar IVA"
+    document.querySelectorAll<HTMLInputElement>('input[name="subtract-iva-rate"]').forEach((input) => {
+      input.addEventListener('change', function(event) {
+        const target = event.target as HTMLInputElement;
+        if (customSubtractRateInput) {
+          customSubtractRateInput.style.display = target.value === 'custom' ? 'inline-block' : 'none';
+        }
+      });
+    });
+
+    // Manejo del formulario "Sumar IVA"
+    const addIvaForm = document.getElementById('add-iva-form') as HTMLFormElement | null;
+    if (addIvaForm) {
+      addIvaForm.addEventListener('submit', function(e) {
+        e.preventDefault();
+
+        const addAmountInput = document.getElementById('add-amount') as HTMLInputElement | null;
+        if (!addAmountInput) return;
+
+        const amount = parseFloat(addAmountInput.value);
+        let ivaRate: number;
+
+        const checkedIvaRate = document.querySelector<HTMLInputElement>('input[name="add-iva-rate"]:checked');
+        if (checkedIvaRate && checkedIvaRate.value !== 'custom') {
+            ivaRate = parseFloat(checkedIvaRate.value);
+        } else if (customAddRateInput) {
+            ivaRate = parseFloat(customAddRateInput.value);
+        } else {
+            alert('Por favor, selecciona una tasa de IVA o introduce una personalizada.');
+            return;
+        }
+
+        if (isNaN(amount) || isNaN(ivaRate) || amount < 0 || ivaRate < 0) {
+            alert('Por favor ingrese valores válidos.');
+            return;
+        }
+
+        const iva = amount * (ivaRate / 100);
+        const total = amount + iva;
+
+        const resultDiv = document.getElementById('add_results_numbs');
+        if (resultDiv) {
+            resultDiv.innerHTML = `<p> ${amount.toFixed(2)} €<br/>
+                                    ${iva.toFixed(2)} €<br/>
+                                    ${total.toFixed(2)} €</p>`;
+        }
+      });
+    }
+
+    // Manejo del formulario "Restar IVA"
+    const subtractIvaForm = document.getElementById('subtract-iva-form') as HTMLFormElement | null;
+    if (subtractIvaForm) {
+      subtractIvaForm.addEventListener('submit', function(e) {
+        e.preventDefault();
+
+        const subtractAmountInput = document.getElementById('subtract-amount') as HTMLInputElement | null;
+        if (!subtractAmountInput) return;
+
+        const amount = parseFloat(subtractAmountInput.value);
+        let ivaRate: number;
+
+        const checkedIvaRate = document.querySelector<HTMLInputElement>('input[name="subtract-iva-rate"]:checked');
+        if (checkedIvaRate && checkedIvaRate.value !== 'custom') {
+            ivaRate = parseFloat(checkedIvaRate.value);
+        } else if (customSubtractRateInput) {
+            ivaRate = parseFloat(customSubtractRateInput.value);
+        } else {
+            alert('Por favor, selecciona una tasa de IVA o introduce una personalizada.');
+            return;
+        }
+
+        if (isNaN(amount) || isNaN(ivaRate) || amount < 0 || ivaRate < 0) {
+            alert('Por favor ingrese valores válidos.');
+            return;
+        }
+
+        const baseAmount = amount / (1 + ivaRate / 100);
+        const iva = amount - baseAmount;
+
+        const resultDiv = document.getElementById('sub_results_numbs');
+        if (resultDiv) {
+            resultDiv.innerHTML = `<p> ${amount.toFixed(2)} €<br/>
+                                    ${iva.toFixed(2)} €<br/>
+                                    ${baseAmount.toFixed(2)} €</p>`;
+        }
+      });
+    }
+  }); // Fin de DOMContentLoaded
+</script>
+
+<style>
+  /* Tus estilos CSS van aquí */
+  #calculadora-iva {
+    max-width: 500px;
+    margin: 2rem auto; /* Ajustado de 40px a 2rem */
+    line-height: 1.5rem; /* Ajustado, si lo tenías en tu CSS original */
+  }
+
+  /* Asegúrate de que este ID exista en tu HTML o quita el estilo */
+  /* Si no lo tienes, puedes ignorarlo */
+  /*
+  #calculadora-iva-contenido {
+      background-color: #fff;
+      padding: 2rem;    
+      border: 1px solid #ccc;
+      border-radius: 10px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+      line-height: 1.3rem; 
+  }
+  */
+
+  .box {
+      margin-bottom: 20px;
+      padding: 20px; /* Aquí estaba 20px, en tu original es 2rem */
+      border: 1px solid #ccc;
+      border-radius: 10px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+      background-color: #fff;
+  }
+
+  .buttons_calc{
+      display: flex;
+  }
+  .buttons_calc button{
+     width: 50%;
+     cursor: pointer;
+     padding: 10px;
+     margin: 0;
+     background-color: #e0e0e0;
+     border: none; /* Asegura que no haya bordes predeterminados */
+  }
+  .buttons_calc button.active {
+      background-color: #2b6cb0;
+  }
+
+  .buttons_calc button h2 {
+      font-size: 1.2rem;
+      color: #c0c0c0;
+  }
+  .buttons_calc button.active h2{
+      color: #25ff00;
+  }
+  label {
+      margin: 10px 0 5px;
+  }
+
+  .form-group {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+  }
+
+  .form-group label {
+      flex: 1 1 auto;
+  }
+
+  input[type="number"] {
+      flex: 1 1 auto;
+      padding: 8px;
+      margin-bottom: 10px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+  }
+
+  @media (max-width: 600px) {
+      .form-group {
+          flex-direction: column;
+          align-items: flex-start;
+      }
+
+      input[type="number"] {
+          width: 80%;
+          margin: 0 auto 2rem;
+      }
+  }
+
+  .radio-group {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      align-items: center;
+      margin-bottom: 10px;
+      margin: 0.5rem auto 2rem;
+  }
+
+  #add-custom-iva-rate,
+  #subtract-custom-iva-rate {
+      margin: 1rem auto;
+      width: 30%;
+  }
+
+  .radio-group label {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      margin: 0 10px;
+      color: gray;
+  }
+  .radio-group label span{
+      margin-top: 5px;
+  }
+
+  .radio-group input[type="radio"]:checked + span {
+      font-weight: bold;
+      color: black;
+      border-bottom: 2px solid black;
+  }
+
+  .custom-rate {
+      width: 100px;
+      margin-top: 10px;
+      display: none;
+  }
+
+  button.boton-calcular {
+      display: block;
+      width: 100%;
+      padding: 10px;
+      background-color: #25ff00;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      max-width: 70%;
+      margin: 1rem auto 2rem;;
+  }
+
+
+  .result {
+      margin-top: 20px;
+      padding: 10px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      background-color: #f9f9f9;
+  }
+
+  .box_calcu {
+              display: none;
+              margin-top: 10px;
+  }
+  .box_calcu.active {
+              display: block;
+          }
+
+   #add-result, #subtract-result {
+      display: flex;
+      width: 130%;
+      border: 1px solid #ccc;
+      padding: 10px;
+      margin: 0rem -15%;
+  }
+  .results_numbs, .results_texts {
+      width: 50%;
+      padding: 10px;
+      box-sizing: border-box;
+          }
+  .results_numbs {	
+      background-color: #2D3748; /* Fondo para distinguir las cajas */
+      text-align: right;
+      color: #25ff00;
+  }
+  .results_texts {	
+      background-color: #f0f0f0; /* Fondo para distinguir las cajas */	
+      text-align: right;
+      font-size: 0.75em;
+  }
+  #add-result .results_texts {	
+      text-align: left;
+  }
+</style>

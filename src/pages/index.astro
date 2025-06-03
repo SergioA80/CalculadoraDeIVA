@@ -9,6 +9,11 @@ import type { CollectionEntry } from "astro:content";
 import { getEntry } from "astro:content";
 import { FaCheck } from "react-icons/fa";
 
+import IVACalculator from '../layouts/components/IVACalculator.astro';
+// Tu nuevo componente para mostrar las últimas entradas del blog
+import LatestBlogPosts from '../layouts/components/LatestBlogPosts.astro'; // <--- NUEVA IMPORTACIÓN
+
+
 interface Homepage {
   banner: {
     title: string;
@@ -35,51 +40,44 @@ const call_to_action = (await getEntry(
 )) as CollectionEntry<"ctaSection">;
 
 const { banner, features } = homepage.data as Homepage;
+
+
 ---
 
 <Base>
+  
+
+
   <!-- Banner -->
-  <section class="section pt-14">
-    <div class="container">
-      <div class="row justify-center">
-        <div class="lg:col-7 md:col-9 mb-8 text-center">
+  <section class="section pt-0">
+     <!-- Nuevo Contenedor para el H1 con imagen de fondo y overlay -->
+    <div class="h1-hero-background"> 
+        <div class="container mx-auto px-4 text-center">
           <h1
             set:html={markdownify(banner.title)}
             class="mb-4 text-h3 lg:text-h1"
           />
-          <p set:html={markdownify(banner.content)} class="mb-8" />
-          {
-            banner.button.enable && (
-              <a
-                class="btn btn-primary"
-                href={banner.button.link}
-                target={
-                  banner.button.link.startsWith("http") ? "_blank" : "_self"
-                }
-                rel="noopener"
-              >
-                {banner.button.label}
-              </a>
-            )
-          }
         </div>
-        {
-          banner.image && (
-            <div class="col-12">
-              <ImageMod
-                src={banner.image}
-                height={380}
-                width={1200}
-                alt="banner"
-                format="webp"
-              />
-            </div>
-          )
-        }
+    </div>
+    <div class="container">
+      <div class="row justify-center">
+        <div class="lg:col-9 mb-8 text-center">
+
+          <p>Utiliza nuestra Calculadora de IVA para calcular el Impuesto sobre el Valor Añadido en España</p>
+                
+          <IVACalculator />              
+                
+          <p>El Impuesto sobre el Valor Añadido (IVA) es una carga fiscal que afecta tanto a consumidores como a empresas en muchos países. <strong>Entender cómo calcular el IVA es esencial para asegurar que las transacciones sean precisas y cumplan con la normativa fiscal</strong>. En este artículo, exploraremos en profundidad cómo calcular el IVA correctamente en diferentes contextos.</p>            
+
+          
+        </div>
       </div>
     </div>
   </section>
   <!-- /Banner -->
+
+  <!-- **NUEVA SECCIÓN**: Últimas Entradas del Blog -->
+  <LatestBlogPosts />
 
   <!-- Features -->
   {
@@ -125,3 +123,32 @@ const { banner, features } = homepage.data as Homepage;
   <Testimonial testimonial={testimonial} />
   <CallToAction call_to_action={call_to_action} />
 </Base>
+
+
+<style>
+  /* Aquí van tus estilos CSS existentes */
+  /* ... (tus estilos existentes para #calculadora-iva, .box, etc.) ... */
+
+  /* NUEVA CLASE PARA EL H1 CON IMAGEN DE FONDO Y OVERLAY */
+  h1 {
+    color: white; 
+  }
+  .h1-hero-background {
+    width: 100%; /* Ocupa todo el ancho */
+    padding-top: 3rem; /* Puedes ajustar este padding vertical */
+    padding-bottom: 3rem; /* Puedes ajustar este padding vertical */
+    margin-bottom: 2rem;
+    
+    /* Configuración de la imagen de fondo */
+    background-image: url('/images/Calculadora-de-IVA-para-calcular-el-Impuesto-sobre-el-Valor-Anadido-en-Espana.webp');
+    background-size: cover;       /* Cubre todo el área del contenedor */
+    background-position: center;  /* Centra la imagen */
+    background-repeat: no-repeat; /* Evita que la imagen se repita */
+
+    /* Overlay de color usando un gradiente lineal sobre la imagen */
+    background-image: 
+      linear-gradient(to bottom, rgba(33, 83, 135, 0.8), rgba(33, 83, 135, 0.8)), /* Capa de color */
+      url('/images/Calculadora-de-IVA-para-calcular-el-Impuesto-sobre-el-Valor-Anadido-en-Espana.webp'); /* Tu imagen */
+  }
+
+</style>

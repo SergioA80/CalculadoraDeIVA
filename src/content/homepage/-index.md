@@ -1,8 +1,8 @@
 ---
 # Banner
 banner:
-  title: "The Ultimate Starter Template You Need To Start Your Astro Project"
-  content: "Astroplate is a free starter template built with Astro and TailwindCSS, providing everything you need to jumpstart your Astro project and save valuable time."
+  title: "Calculadora de IVA en España 2025"
+  content: "El Impuesto sobre el Valor Añadido (IVA) es una carga fiscal que afecta tanto a consumidores como a empresas en muchos países. **Entender cómo calcular el IVA es esencial para asegurar que las transacciones sean precisas y cumplan con la normativa fiscal**. En este artículo, exploraremos en profundidad cómo calcular el IVA correctamente en diferentes contextos."
   image: "/images/banner.png"
   button:
     enable: true

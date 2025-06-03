@@ -1,16 +1,35 @@
 ---
 import config from "@/config/config.json";
 import dateFormat from "@/lib/utils/dateFormat";
-import { humanize, plainify, slugify } from "@/lib/utils/textConverter";
+import { humanize, plainify, slugify, markdownify } from "@/lib/utils/textConverter"; // <-- Asegúrate de importar markdownify
 import { FaRegFolder, FaRegUserCircle } from "react-icons/fa";
 import ImageMod from "./ImageMod.astro";
 
 const {
   summary_length,
-  blog_folder,
-}: { summary_length: number; blog_folder: string } = config.settings;
-const { data } = Astro.props;
-const { title, image, date, author, categories } = data.data;
+}: { summary_length: number; blog_folder: string } = config.settings; // Mantener blog_folder para tipado si config.settings lo tiene
+
+// 'data' es el objeto 'post' completo (CollectionEntry)
+const { data } = Astro.props; 
+const post = data; // Renombramos 'data' a 'post' para mayor claridad
+
+// Desestructuramos las propiedades del frontmatter (post.data)
+const { title, image, date, author, categories, description } = post.data; // También desestructuramos 'description'
+
+const cleanedSlug = post.id.replace(/\.mdx?$/, ''); 
+
+// --- NUEVA LÓGICA PARA EL RESUMEN DEL TEXTO ---
+let postSummary: string = "";
+
+if (post.body) {
+  // Si no hay descripción, usamos el cuerpo del post
+  postSummary = plainify(post.body); // Aseguramos que sea texto plano
+}
+
+// Cortar el resumen a la longitud deseada y añadir "..." si es necesario
+if (postSummary.length > summary_length) {
+  postSummary = postSummary.slice(0, Number(summary_length)) + '...';
+}
 ---
 
 <div class="bg-body dark:bg-darkmode-body">
@@ -27,7 +46,7 @@ const { title, image, date, author, categories } = data.data;
     )
   }
   <h4 class="mb-3">
-    <a href={`/${blog_folder}/${data.id}`}>
+    <a href={`/${cleanedSlug}`}>
       {title}
     </a>
   </h4>
@@ -51,8 +70,13 @@ const { title, image, date, author, categories } = data.data;
     </li>
     {date && <li class="inline-block">{dateFormat(date)}</li>}
   </ul>
-  <p class="mb-6">{plainify(data.body?.slice(0, Number(summary_length)))}</p>
-  <a class="btn btn-outline-primary btn-sm" href={`/${blog_folder}/${data.id}`}>
+  
+  {/* **CAMBIO CLAVE AQUÍ**: Mostrar la descripción o el cuerpo del post */}
+  <p class="mb-6">
+    {postSummary || 'Contenido no disponible.'} {/* Muestra el resumen o un mensaje de fallback */}
+  </p>
+  
+  <a class="btn btn-outline-primary btn-sm" href={`/${cleanedSlug}`}>
     read more
   </a>
 </div>

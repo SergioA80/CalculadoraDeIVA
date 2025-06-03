@@ -1,0 +1,89 @@
+---
+// src/components/LatestBlogPosts.astro
+// Este componente mostrará las últimas entradas del blog en la página de inicio.
+
+// --- IMPORTS ---
+// Importa las mismas funciones y componentes que usa tu blog/index.astro
+// Ajusta las rutas según donde estén ubicados en tu proyecto (la mayoría son relativas a la raíz del proyecto "@/...")
+import BlogCard from "@/components/BlogCard.astro"; // Para mostrar cada post
+import config from "@/config/config.json"; // Para acceder a settings como la paginación
+import { getSinglePage } from "@/lib/contentParser.astro"; // Para obtener todos los posts
+import { sortByDate } from "@/lib/utils/sortFunctions"; // Para ordenar los posts
+
+// Define cuántas entradas de blog quieres mostrar en la página de inicio
+const numberOfPostsToShow = 3; // Puedes ajustar este número (ej. 3, 4, 5)
+
+// --- LÓGICA DE DATOS (Frontmatter) ---
+
+// 1. Obtener todos los posts del blog utilizando la función de tu plantilla
+const BLOG_FOLDER = "blog"; // La carpeta de tu blog en src/content
+const posts = await getSinglePage(BLOG_FOLDER);
+
+// 2. Ordenar todos los posts por fecha, utilizando la función de tu plantilla
+const sortedPosts = sortByDate(posts);
+
+// 3. Seleccionar solo las últimas entradas (las más recientes)
+const latestPosts = sortedPosts.slice(0, numberOfPostsToShow);
+
+// Nota: No necesitamos pagination, categories, o tags aquí, ya que es un listado simple para la home.
+---
+
+<!-- --- ESTRUCTURA HTML DEL COMPONENTE --- -->
+<section class="section py-14"> {/* Una sección para las últimas entradas */}
+  <div class="container">
+    <div class="row justify-center">
+      <div class="lg:col-9 mb-8 text-center">
+        {/* Título de la sección */}
+        <h2 class="mb-8 text-h3 lg:text-h2">Últimas Entradas del Blog</h2>
+      </div>
+    </div>
+    
+    <div class="row justify-center">
+      {/* Mapea las últimas entradas y usa BlogCard para cada una */}
+      {latestPosts.length > 0 ? (
+        latestPosts.map((post) => (
+          <div class="mb-14 md:col-6 lg:col-4"> {/* md:col-6 para 2 columnas en md, lg:col-4 para 3 columnas en lg */}
+            <BlogCard data={post} />
+          </div>
+        ))
+      ) : (
+        <div class="lg:col-9 text-center">
+          <p>No hay entradas de blog disponibles en este momento.</p>
+        </div>
+      )}
+    </div>
+    
+    {/* Enlace para ver todas las entradas del blog */}
+    <div class="row justify-center mt-8">
+      <a href="/blog" class="btn btn-primary">Ver todas las entradas</a>
+    </div>
+  </div>
+</section>
+
+<!-- --- ESTILOS CSS DEL COMPONENTE --- -->
+<style>
+  /* Aquí puedes añadir tus propios estilos CSS personalizados para este componente,
+     o usar @apply para aplicar clases de Tailwind. */
+
+  /* Asegúrate de que las clases de la plantilla como .section, .container, .row,
+     y las clases de columna (md:col-X, lg:col-X) estén definidas en tu CSS global
+     o en otros lugares donde Astroplate las gestiona. */
+  
+  /* Ejemplo de cómo las clases custom de la plantilla podrían estar definidas
+     si las estás usando en el HTML de este componente (en tu global.css o theme.css)
+     No necesitas redefinirlas aquí a menos que quieras sobrescribir. */
+
+  /* Por ejemplo, un estilo para el botón si no está cubierto por btn btn-primary en tu plantilla */
+  .btn-primary {
+    background-color: var(--color-primary);
+    color: white;
+    padding: 10px 20px;
+    border-radius: 5px;
+    text-decoration: none;
+    display: inline-block;
+    transition: background-color 0.2s ease;
+  }
+  .btn-primary:hover {
+    background-color: var(--color-primary-dark);
+  }
+</style>

@@ -7,12 +7,18 @@ export async function getStaticPaths() {
   const BLOG_FOLDER = "blog";
   const posts = await getSinglePage(BLOG_FOLDER);
 
-  const paths = posts.map((post) => ({
-    params: {
-      single: post.id,
-    },
-    props: { post },
-  }));
+  const paths = posts.map((post) => {
+    // Generar el slug a partir de post.id
+    // post.id es algo como "mi-post.md"
+    const slugFromId = post.id.replace(/\.mdx?$/, ''); // Elimina .md o .mdx
+    
+    return {
+      params: {
+        single: slugFromId, // <--- ¡CAMBIO AQUÍ!
+      },
+      props: { post },
+    };
+  });
   return paths;
 }
 

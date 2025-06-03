@@ -37,11 +37,11 @@ const currentPosts = sortedPosts.slice(0, config.settings.pagination);
     <div class="container">
       <div class="row gx-5">
         <!-- blog posts -->
-        <div class="lg:col-8">
+        <div class="lg:col-12">
           <div class="row">
             {
               currentPosts.map((post) => (
-                <div class="mb-14 md:col-6">
+                <div class="mb-14 md:col-4">
                   <BlogCard data={post} />
                 </div>
               ))
@@ -55,7 +55,7 @@ const currentPosts = sortedPosts.slice(0, config.settings.pagination);
         </div>
 
         <!-- sidebar -->
-        <PostSidebar
+         <PostSidebar
           categories={categories}
           tags={tags}
           allCategories={allCategories}
