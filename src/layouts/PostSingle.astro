@@ -6,17 +6,34 @@ import { getSinglePage } from "@/lib/contentParser.astro";
 import dateFormat from "@/lib/utils/dateFormat";
 import similarItems from "@/lib/utils/similarItems";
 import { humanize, markdownify, slugify } from "@/lib/utils/textConverter";
-import { render } from "astro:content";
 import { FaRegClock, FaRegFolder, FaRegUserCircle } from "react-icons/fa";
-import ImageMod from "./components/ImageMod.astro";
+import ImageMod from "@/components/ImageMod.astro"; // <-- Asegúrate de que esta ruta sea correcta
+import { render, type CollectionEntry } from "astro:content"; 
 
-const COLLECTION_FOLDER = "blog";
-const { post } = Astro.props;
+// Definición de las props que PostSingle espera
+interface Props {
+  post: CollectionEntry<'blog'>; // Recibe el post completo de [single].astro
+  transitionNameBase?: string; // <-- ¡NUEVA PROP! Para la base del nombre de la transición
+}
 
+const { post, transitionNameBase } = Astro.props; // <-- Desestructurar la nueva prop
+
+const COLLECTION_FOLDER = "blog"; // Definir aquí si es necesario
+
+// Obtener posts similares (puede ser costoso si hay muchos)
 const posts = await getSinglePage(COLLECTION_FOLDER);
-const similarPosts = similarItems(post, posts);
+const similarPosts = similarItems(post, posts); // Post es el post actual, posts son todos los posts
+
+// Renderizar el cuerpo del post
 const { Content } = await render(post);
+
+// Desestructurar los datos del frontmatter del post
 const { title, description, author, categories, image, date, tags } = post.data;
+
+// Generar el slug limpio para la URL si no viene en post.slug
+const postSlugForShare = post.id.replace(/\.mdx?$/, ''); 
+// La propiedad 'slug' para CollectionEntry ya debería estar en post.slug
+
 ---
 
 <section class="section pt-7">
@@ -27,12 +44,13 @@ const { title, description, author, categories, image, date, tags } = post.data;
           image && (
             <div class="mb-10">
               <ImageMod
-                src={image}
+                src={image} 
                 height={500}
                 width={1200}
                 alt={title}
                 class="w-full rounded"
-                format="webp"
+                format="webp" 
+                transitionNameBase={transitionNameBase} 
               />
             </div>
           )
@@ -88,7 +106,7 @@ const { title, description, author, categories, image, date, tags } = post.data;
               className="social-icons"
               title={title}
               description={description}
-              slug={post.id}
+              slug={postSlugForShare} 
             />
           </div>
         </div>

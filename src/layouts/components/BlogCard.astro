@@ -14,7 +14,7 @@ const { data } = Astro.props;
 const post = data; // Renombramos 'data' a 'post' para mayor claridad
 
 // Desestructuramos las propiedades del frontmatter (post.data)
-const { title, image, date, author, categories, description } = post.data; // También desestructuramos 'description'
+const { title, image, date, author, categories, description, slug } = post.data; // También desestructuramos 'description'
 
 const cleanedSlug = post.id.replace(/\.mdx?$/, ''); 
 
@@ -42,6 +42,7 @@ if (postSummary.length > summary_length) {
         width={445}
         height={230}
         format="webp"
+        transitionNameBase={cleanedSlug}
       />
     )
   }

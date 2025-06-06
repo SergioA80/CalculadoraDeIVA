@@ -13,6 +13,8 @@ interface Props {
   format?: "auto" | "avif" | "jpeg" | "png" | "svg" | "webp";
   class?: string;
   style?: any;
+  // *** NUEVA PROP: Para la base del nombre de la transición ***
+  transitionNameBase?: string; 
 }
 
 // Destructuring Astro.props to get the component's props
@@ -26,6 +28,7 @@ let {
   class: className,
   format,
   style,
+  transitionNameBase,
 } = Astro.props;
 
 src = `/public${src}`;
@@ -41,6 +44,13 @@ const isValidPath = images[src] ? true : false;
   console.error(
     `\x1b[31mImage not found - ${src}.\x1b[0m Make sure the image is in the /public/images folder.`,
   );
+
+
+// *** Lógica para el nombre de la transición ***
+// Si transitionNameBase existe, lo usamos.
+// Un nombre de transición DEBE SER ÚNICO en cada página.
+// Usamos un prefijo y el transitionNameBase (que será el slug)
+const finalTransitionName = transitionNameBase ? `img-${transitionNameBase}` : undefined;
 ---
 
 {
@@ -55,6 +65,7 @@ const isValidPath = images[src] ? true : false;
       class={className}
       format={format}
       style={style}
+      transition:name={finalTransitionName}
     />
   )
 }

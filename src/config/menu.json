@@ -1,16 +1,16 @@
 {
   "main": [
     {
-      "name": "Home",
+      "name": "Calculadora de IVA en España 2025",
       "url": "/"
     },
     {
-      "name": "About",
-      "url": "/about"
+      "name": "Sobre Nosotros",
+      "url": "/sobre-nosotros"
     },
     {
-      "name": "Elements",
-      "url": "/elements"
+      "name": "Blog",
+      "url": "/blog"
     },
     {
       "name": "Pages",
@@ -22,8 +22,8 @@
           "url": "/contact"
         },
         {
-          "name": "Blog",
-          "url": "/blog"
+         "name": "Elements",
+         "url": "/elements"
         },
         {
           "name": "Authors",

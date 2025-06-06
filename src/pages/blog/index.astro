@@ -1,42 +1,81 @@
 ---
+// src/pages/blog/index.astro
+// Este es el archivo que lista todos los posts del blog
+
 import BlogCard from "@/components/BlogCard.astro";
 import Pagination from "@/components/Pagination.astro";
 import config from "@/config/config.json";
-import Base from "@/layouts/Base.astro";
+import Base from "@/layouts/Base.astro"; // Asegúrate de que esta ruta sea correcta
 import { getSinglePage } from "@/lib/contentParser.astro";
 import { getAllTaxonomy, getTaxonomy } from "@/lib/taxonomyParser.astro";
 import { sortByDate } from "@/lib/utils/sortFunctions";
 import PageHeader from "@/partials/PageHeader.astro";
 import PostSidebar from "@/partials/PostSidebar.astro";
-import type { CollectionEntry } from "astro:content";
-import { getEntry } from "astro:content";
+import type { CollectionEntry } from "astro:content"; // Necesario para tipar postIndex
+import { getEntry } from "astro:content"; // Necesario para getEntry
 
 const BLOG_FOLDER = "blog";
 
+// Obtener la entrada de índice de la colección 'blog'
+// **IMPORTANTE**: Asegúrate de que src/content/blog/-index.md existe y tiene su frontmatter.
+// Si no existe, postIndex será undefined, y dará error al acceder a postIndex.data
 const postIndex = (await getEntry(
   BLOG_FOLDER,
   "-index"
-)) as CollectionEntry<"blog">;
+)) as CollectionEntry<"blog"> | undefined; // <--- Añadir '| undefined' para seguridad
+
+// --- LÓGICA DE URL CANÓNICA Y NOINDEX para la página del blog ---
+// 1. Obtener la URL canónica de la página actual
+const canonicalUrl = Astro.url.href; // Esta es la URL canónica automatizada para esta página.
+
+// 2. Determinar si esta página debe ser noindex.
+//    Puedes:
+//    a) Definirlo aquí directamente (como en tu propuesta original).
+//    b) Añadir 'noindex: boolean' al frontmatter de src/content/blog/-index.md y leerlo de postIndex.data.
+const noindexPage = false; // Por defecto, la página principal del blog debe ser indexable.
+
+// --- Manejo de metadatos del blog ---
+// Define valores por defecto si postIndex es undefined o si sus campos no existen
+const defaultBlogTitle = config.site.title + " Blog";
+const defaultBlogMetaTitle = "Blog - Últimas Entradas";
+const defaultBlogDescription = "Explora nuestras publicaciones más recientes.";
+const defaultBlogImage = undefined; // O una ruta a una imagen por defecto, ej. '/images/blog-default.webp'
+
+// Usa los valores de postIndex si existen, de lo contrario, usa los por defecto
+const titleForLayout = postIndex?.data.title || defaultBlogTitle;
+const metaTitleForLayout = postIndex?.data.meta_title || titleForLayout || defaultBlogMetaTitle;
+const descriptionForLayout = postIndex?.data.description || defaultBlogDescription;
+const imageForLayout = postIndex?.data.image || defaultBlogImage;
+
+
+// --- El resto de tu lógica de obtención y ordenación de posts ---
 const posts = await getSinglePage(BLOG_FOLDER);
 const allCategories = await getAllTaxonomy(BLOG_FOLDER, "categories");
-const categories = await getTaxonomy(BLOG_FOLDER, "categories");
-const tags = await getTaxonomy(BLOG_FOLDER, "tags");
+const categories = await getTaxonomy(BLOG_FOLDER, "categories"); // Corregido: categories vs tags
+const tags = await getTaxonomy(BLOG_FOLDER, "tags"); // Mantener tags
+
 const sortedPosts = sortByDate(posts);
 const totalPages: number = Math.ceil(posts.length / config.settings.pagination);
 const currentPosts = sortedPosts.slice(0, config.settings.pagination);
+
+
+
 ---
 
+<!-- Pasa los props al BaseLayout -->
 <Base
-  title={postIndex.data.title}
-  meta_title={postIndex.data.meta_title}
-  image={postIndex.data.image}
-  description={postIndex.data.description}
+  title={metaTitleForLayout}
+  meta_title={metaTitleForLayout}
+  image={imageForLayout}
+  description={descriptionForLayout}
+  canonical={canonicalUrl} 
+  noindex={noindexPage}     
 >
-  <PageHeader title={postIndex?.data.title} />
+  <PageHeader title={titleForLayout} />
   <section class="section">
     <div class="container">
       <div class="row gx-5">
-        <!-- blog posts -->
+        {/* blog posts */}
         <div class="lg:col-12">
           <div class="row">
             {
@@ -62,5 +101,40 @@ const currentPosts = sortedPosts.slice(0, config.settings.pagination);
         />
       </div>
     </div>
-  </section>
+
+    <div class="container mt-10">
+      <div class="row gx-5">
+        <div class="lg:col-8 mx-auto">
+          <div class="row prose dark:prose-invert max-w-none mx-auto">
+
+<h2>¡Bienvenido al Blog del IVA! Donde los Impuestos se Vuelven (un Poco) Más Amigos</h2>
+
+<p>El IVA... esa palabreja que a veces nos da dolor de cabeza, ¿verdad? Un mundo de porcentajes, normativas que cambian, y conceptos que, seamos sinceros, no siempre son pan comido. Si alguna vez te has sentido un poco perdido entre tanta jerga fiscal, o si simplemente buscas entender mejor cómo te afecta este impuesto en tu día a día o en tu negocio, ¡has llegado al sitio correcto!</p>
+
+<p>Pero eh, que no cunda el pánico. Precisamente para eso nace este rincón: <strong>el Blog del IVA</strong>. Un espacio donde intentamos, con todas nuestras ganas, desmitificar este impuesto y acercártelo de una forma más humana, más comprensible.</p>
+
+<p>Aquí, en este espacio que hemos ido creando juntos, queremos ponerte las cosas un poquito más fáciles. Vas a encontrar una colección de artículos, todos los que hemos ido puliendo y actualizando, que buscan arrojar luz sobre este compañero de viaje casi inseparable que es el Impuesto sobre el Valor Añadido. Desde lo más básico, para que no te pierdas en los cimientos, hasta esos recovecos que parecen diseñados para que uno se tropiece.</p>
+
+<h2>¿Y por qué un blog dedicado al IVA?</h2>
+<p>Pues porque, nos guste o no, el IVA está en todas partes. En el café que te tomas por la mañana, en la factura de la luz que tanto nos ha preocupado últimamente, en los servicios que contratas para tu empresa, en esa compra online que esperas con ilusión... Entenderlo, aunque sea un poquito, marca la diferencia. Te ayuda a tomar mejores decisiones, a evitar sorpresas desagradables con Hacienda y, quién sabe, quizás hasta a optimizar un poco tus finanzas.</p>
+
+<h2>¿Qué vas a encontrar por aquí? Un poco de todo, siempre con el IVA como protagonista:</h2>
+
+<ul>
+    <li>¿Necesitas un repaso de <strong>qué es exactamente el IVA</strong> y cómo funciona ese mecanismo de gravar el consumo? Pues tenemos un post para eso, clarito y al grano, como si te lo contara un amigo.</li>
+    <li>¿Te lías con los <strong>tipos de IVA</strong>? Que si el 21%, el 10%, el superreducido del 4%... ¡Menudo lío a veces! Tranqui, también lo desgranamos para que sepas <strong>cuánto toca pagar</strong> en cada caso y a qué productos o servicios se aplica cada uno.</li>
+    <li>Y el <strong>IVA de la luz</strong>, ¡ay, el IVA de la luz! Con sus idas y venidas, sus subidas y sus "bajadas temporales". Hemos intentado mantenerte al día sobre cómo está el patio con ese impuesto tan sensible para nuestros bolsillos, explicando los últimos cambios.</li>
+    <li>Luego están esos conceptos que suenan a chino mandarín, como el <strong>sujeto pasivo del IVA</strong> o la famosa <strong>inversión del sujeto pasivo</strong>. Palabras que pueden imponer, pero que son cruciales para muchas empresas y autónomos. Pues también nos hemos atrevido con ellos, buscando ejemplos y explicaciones que no te hagan salir corriendo, sino que te ayuden a entender quién es quién en la película fiscal.</li>
+</ul>
+
+<p>Nuestra idea es simple: coger la jerga fiscal, a menudo densa y complicada, y traducirla a un lenguaje que todos podamos entender. Con ejemplos de la vida real, con un toque personal, y sí, a veces con alguna pequeña 'imperfección' conversacional que nos haga sonar más humanos, menos como un manual de instrucciones. Porque creemos firmemente que aprender sobre impuestos no tiene por qué ser un suplicio. Queremos que te sientas cómodo, como si estuvieras charlando con alguien que sabe del tema pero que te lo explica sin darse aires.</p>
+
+<p>Este blog es un trabajo en progreso, como la propia normativa fiscal, que nunca para quieta. Por eso, intentamos que la información esté lo más actualizada posible.</p>
+
+<p>Así que, te invitamos a navegar, a curiosear entre los artículos. Léelos a tu ritmo. ¿Tienes dudas? ¿Algo no te cuadra o te gustaría que profundizáramos en algún aspecto concreto? ¡Déjanos un comentario! Este blog también se alimenta de vuestras preguntas y vuestras experiencias. Porque juntos, seguro que lo entendemos todo mucho mejor.</p>
+
+<p>Este es tu Blog del IVA. Un espacio para entender, para preguntar y, con suerte, para que la próxima vez que oigas hablar del Impuesto sobre el Valor Añadido, no te eches a temblar.</p>
+
+<p>¡Adelante, explora y que el IVA te sea leve!</p>
+</div></div></div></div></section>
 </Base>

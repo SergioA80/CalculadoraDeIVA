@@ -1,7 +1,7 @@
 {
   "site": {
-    "title": "Calculadora de IVA en España",
-    "base_url": "https://astroplate.netlify.app",
+    "title": "Calculadora de IVA en España 2025",
+    "base_url": "https://calculadora-de-iva.es",
     "base_path": "/",
     "trailing_slash": false,
     "favicon": "/images/favicon.png",
@@ -45,8 +45,8 @@
   },
 
   "metadata": {
-    "meta_author": "Calculadora de IVA",
+    "meta_author": "Javier Rodríguez Pérez",
     "meta_image": "/images/og-image.png",
-    "meta_description": "Calculadora de IVA"
+    "meta_description": "Haz Clic AQUÍ y utiliza nuestra Calculadora de IVA para calcular el Impuesto sobre el Valor Añadido. ✔️ Te ayudamos a sumar o quitar el IVA, el porcentaje..."
   }
 }

@@ -14,6 +14,9 @@ const blogCollection = defineCollection({
     categories: z.array(z.string()).default(["others"]),
     tags: z.array(z.string()).default(["others"]),
     draft: z.boolean().optional(),
+    // ¡NUEVO! Propiedades para SEO
+    canonical: z.string().optional(), // Para la URL canónica (string)
+    noindex: z.boolean().optional(),   // Para el robots meta tag (boolean)
   }),
 });
 
@@ -62,6 +65,8 @@ const aboutCollection = defineCollection({
     description: z.string().optional(),
     image: z.string().optional(),
     draft: z.boolean().optional(),
+    noindex: z.boolean().optional(), // <--- Asegúrate de que esta esté
+    canonical: z.string().optional(), // <--- Y esta
   }),
 });
 

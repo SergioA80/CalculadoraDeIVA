@@ -3,6 +3,9 @@ import Base from "@/layouts/Base.astro";
 import PostSingle from "@/layouts/PostSingle.astro";
 import { getSinglePage } from "@/lib/contentParser.astro";
 
+// Necesitamos el componente ImageMod para la imagen principal del post
+import ImageMod from "@/components/ImageMod.astro"; 
+
 export async function getStaticPaths() {
   const BLOG_FOLDER = "blog";
   const posts = await getSinglePage(BLOG_FOLDER);
@@ -23,7 +26,31 @@ export async function getStaticPaths() {
 }
 
 const { post } = Astro.props;
-const { title, meta_title, description, image } = post.data;
+const { title, meta_title, description, image, noindex, canonical, author } = post.data;
+
+
+
+// --- LÓGICA DE URL CANÓNICA ---
+// 1. Obtener la URL base del sitio
+const siteBaseUrl = Astro.site?.toString() || 'http://localhost:4321'; 
+
+// 2. Generar el slug limpio del post A PARTIR DE post.id
+//    Dado que 'post.slug' no está disponible directamente, lo construimos de 'post.id'.
+const postSlug = post.id.replace(/\.mdx?$/, ''); 
+
+// 3. Construir la URL canónica automatizada
+const automatedCanonical = `${siteBaseUrl}${postSlug}`; 
+
+// 4. La URL canónica FINAL: Prioriza el frontmatter, si no, usa la automatizada.
+const finalCanonicalUrl = canonical || automatedCanonical; // Usamos 'canonical' que desestructuramos de post.data
+
+
+// --- LÓGICA DE NOINDEX ---
+// Si noindex está en el frontmatter, lo usamos. Si no, asumimos false (indexable).
+const finalNoindex = noindex || false;
+
+// La URL de la imagen principal del post
+const mainImageUrl = image; // Asumo que 'image' es la URL de la imagen destacada del frontmatter.
 ---
 
 <Base
@@ -31,6 +58,9 @@ const { title, meta_title, description, image } = post.data;
   meta_title={meta_title}
   description={description}
   image={image}
+  canonical={finalCanonicalUrl} 
+  noindex={finalNoindex}     
+  author={author}
 >
-  <PostSingle post={post} />
+  <PostSingle post={post} transitionNameBase={postSlug} />
 </Base>

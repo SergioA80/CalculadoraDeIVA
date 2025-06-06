@@ -41,21 +41,28 @@ const call_to_action = (await getEntry(
 
 const { banner, features } = homepage.data as Homepage;
 
+// Props para el BaseLayout
+const pageProps = {
+  description: "Haz Clic AQUÍ y utiliza nuestra Calculadora de IVA para calcular el Impuesto sobre el Valor Añadido. ✔️ Te ayudamos a sumar o quitar el IVA, el porcentaje...",
+  canonical: 'https://calculadora-de-iva.es', // <-- ¡Añade esto!
+  // ... otros props ...
+};
 
 ---
 
-<Base>
+<Base {...pageProps}>
   
 
 
   <!-- Banner -->
-  <section class="section pt-0">
+  <section class="section pt-0 py-0">
      <!-- Nuevo Contenedor para el H1 con imagen de fondo y overlay -->
     <div class="h1-hero-background"> 
         <div class="container mx-auto px-4 text-center">
           <h1
             set:html={markdownify(banner.title)}
             class="mb-4 text-h3 lg:text-h1"
+            id="calculadora-de-iva-en-espana"
           />
         </div>
     </div>
@@ -63,11 +70,11 @@ const { banner, features } = homepage.data as Homepage;
       <div class="row justify-center">
         <div class="lg:col-9 mb-8 text-center">
 
-          <p>Utiliza nuestra Calculadora de IVA para calcular el Impuesto sobre el Valor Añadido en España</p>
+          <p class="mb-8 text-lg">Utiliza nuestra Calculadora de IVA para calcular el Impuesto sobre el Valor Añadido en España</p>
                 
           <IVACalculator />              
                 
-          <p>El Impuesto sobre el Valor Añadido (IVA) es una carga fiscal que afecta tanto a consumidores como a empresas en muchos países. <strong>Entender cómo calcular el IVA es esencial para asegurar que las transacciones sean precisas y cumplan con la normativa fiscal</strong>. En este artículo, exploraremos en profundidad cómo calcular el IVA correctamente en diferentes contextos.</p>            
+          <p class="mb-8 text-lg">El Impuesto sobre el Valor Añadido, el IVA. Una carga fiscal, sí, que nos toca a todos, seamos consumidores o llevemos una empresa, en un montón de países. <strong>Y entender cómo se calcula esto del IVA es... bueno, esencial. Más que nada para asegurar que las transacciones se hagan bien, con precisión, y que se cumpla con lo que manda Hacienda</strong>. En este artículo, vamos a meternos a fondo en cómo calcular el IVA correctamente, en diferentes situaciones, para que no queden dudas.</p>         
 
           
         </div>
@@ -118,10 +125,136 @@ const { banner, features } = homepage.data as Homepage;
       </section>
     ))
   }
+
+  <div class="container">
+      <div class="row">
+        <div class="content lg:col-9 mb-8">
+
+          <p class="mb-8 text-lg text-center">Y ojo, que además de estos, hace poco se introdujeron temporalmente un tipo reducido especial del 5% y hasta un tipo superreducido especial del 0% para ciertos productos muy esenciales. Cada país es un mundo con esto del IVA, y los tipos pueden variar un montón según las políticas fiscales de cada sitio. En algunos países, por ejemplo, aplican tipos más bajos a servicios culturales o educativos, para que sean más accesibles y se desarrollen más. Interesante, ¿verdad?</p>   
+          
+          <h2 class="mb-4 text-center">Cómo calcular el IVA de una cantidad</h2>
+
+<p class="mb-8 text-lg">El cálculo del IVA de una cantidad se hace, directamente, sobre el precio de venta del producto o del servicio. <strong>Hay que tener unas cuantas cosas claras cuando nos ponemos a calcular el IVA:</strong></p>
+<ol>
+    <li>El precio neto de venta, o sea, sin IVA.</li>
+    <li>La tarifa de IVA que se aplica, el porcentaje.</li>
+    <li>La cantidad de dinero que representa ese IVA.</li>
+    <li>Y el importe total, ya con el IVA incluido.</li>
+</ol>
+
+<blockquote>
+    <h3 class="text-center">Diferencias entre Bruto y Neto. ¡Que no te líen!</h3>
+    <p class="mb-8 text-lg"><strong>Bruto</strong>: Es la cantidad total, con el IVA ya metido dentro.<br>
+    <strong>Neto</strong>: Es la cantidad sin incluir el IVA. Limpia, digamos.</p>
+</blockquote>
+
+
+
+<h3 class="mb-4">Ejemplo de cómo calcular el IVA 21%</h3>
+
+<p class="mb-8 text-lg">Imagina que tienes un producto que cuesta 100 euros sin IVA, y quieres saber cuánto te costará en total, con el IVA incluido. Si la tasa de IVA es del 21%, el cálculo es así de fácil:</p>
+<ul>
+    <li><strong>Precio neto:</strong> 100 euros</li>
+    <li><strong>Tarifa o porcentaje de IVA:</strong> 21%</li>
+    <li><strong>Importe de IVA:</strong> 100 euros * 0.21 = 21 euros (¡así de simple!)</li>
+    <li><strong>Precio bruto:</strong> 100 euros + 21 euros = 121 euros</li>
+</ul>
+
+<h3 class="mb-4">Cómo Calcular el Importe Bruto</h3>
+
+<p class="mb-8 text-lg">Calcular el importe bruto partiendo del neto es... ¡chupado!:</p>
+<blockquote>
+    <p class="mb-8 text-lg">Importe bruto = Importe neto + IVA</p>
+</blockquote>
+
+<h3 class="mb-4">Cómo calcular el precio con IVA (precio bruto) desde el precio sin IVA incluido del 21% (precio neto)</h3>
+
+<p class="mb-8 text-lg">Por ejemplo, si el importe neto son 100 euros y el IVA es del 21%:</p>
+<ol>
+    <li><strong>Multiplicas por la tasa de IVA</strong>: 100 euros * 0.21 = 21 euros.</li>
+    <li><strong>Sumas el IVA al precio base</strong>: 100 euros + 21 euros = 121 euros.</li>
+</ol>
+<p class="mb-8 text-lg">Otra forma de hacer este mismo cálculo, para el 21% de IVA, es multiplicar directamente por 1.21. ¡Más rápido aún!:</p>
+<ol>
+    <li><strong>Multiplicas por 1.21</strong>: 100 euros * 1.21 = 121 euros.</li>
+</ol>
+
+<h3 class="mb-4">Cómo calcular el precio sin IVA (precio neto) desde el precio con IVA Incluido del 21% (precio bruto)</h3>
+
+<p class="mb-8 text-lg">Ahora al revés. Si tienes el precio total, con el IVA ya dentro, y quieres saber cuánto era sin el IVA, pues haces el proceso inverso. Por ejemplo, si el precio con IVA es de 121 euros:</p>
+<ol>
+    <li><strong>Divides el precio total entre 1.21</strong>: 121 euros / 1.21 = 100 euros. Así de fácil, puedes saber que el precio sin IVA era de 100 euros.</li>
+</ol>
+
+<h2 class="mb-4 text-center">Cómo calcular la cantidad de IVA desde el precio con IVA (importe bruto)</h2>
+
+<p class="mb-8 text-lg">Para sacar el IVA que está incluido en un importe bruto, la fórmula que se usa es esta:</p>
+<blockquote>
+    <p class="mb-8 text-lg">Importe de IVA = (Importe bruto / (1 + Tarifa de IVA)) * Tarifa de IVA</p>
+</blockquote>
+
+<h3 class="mb-4">Ejemplo de cómo calcular el IVA desde el precio con IVA (precio bruto)</h3>
+
+<p class="mb-8 text-lg">Imagina que el importe bruto es de 121 euros y el I V A es del 21%. Pues sería:</p>
+<ul>
+    <li>Importe de IVA = (121 euros / 1.21) * 0.21 = 21 euros. ¡Ahí lo tienes!</li>
+</ul>
+
+<h2 class="mb-4 text-center">Ejemplos Prácticos</h2>
+
+<p class="mb-8 text-lg">Vamos con unos cuantos ejemplos más, para que se vea claro:</p>
+
+<h3 class="mb-4">Calcular el IVA del 21% sobre un precio neto:</h3>
+<ul>
+    <li>Importe neto: 620 euros</li>
+    <li>IVA: 620 euros * 0.21 = 130.20 euros</li>
+    <li>Precio total: 620 euros + 130.20 euros = 750.20 euros</li>
+</ul>
+
+<h3 class="mb-4">Calcular el precio total con IVA incluido:</h3>
+<ul>
+    <li>Precio neto: 89 euros</li>
+    <li>Precio total: 89 euros * 1.21 = 107.69 euros (¡directo!)</li>
+</ul>
+
+<h3 class="mb-4">Calcular el IVA de un precio bruto:</h3>
+<ul>
+    <li>Precio bruto: 164.83 euros</li>
+    <li>IVA: 164.83 euros / 1.21 * 0.21 = 28.61 euros (usando la formulita)</li>
+</ul>
+
+<h2 class="mb-4 text-center">Errores Comunes al Calcular el IVA y Cómo Evitarlos</h2>
+
+<p class="mb-8 text-lg">Algunos errores tontos que se suelen cometer, y que hay que intentar evitar:</p>
+<ul>
+    <li><strong>Aplicar una tasa de IVA que no toca:</strong> Asegúrate bien de saber qué tasa va con cada tipo de producto o servicio. No todas son iguales.</li>
+    <li><strong>Olvidarse de incluir el IVA en las facturas:</strong> Parece mentira, pero pasa. Verifica siempre que el IVA esté clarito, bien indicado, y sumado al total.</li>
+    <li><strong>No hacer bien el ajuste entre precios con IVA y sin IVA:</strong> Para eso está nuestra calculadora de IVA, ¡para evitar estos líos y errores en los cálculos!</li>
+</ul>
+
+<h2 class="mb-4 text-center">El IVA en el Contexto Empresarial</h2>
+
+<p class="mb-8 text-lg">Las empresas, ya sabes, tienen que recoger el IVA de sus clientes. Pero también pueden deducirse el IVA que han pagado a sus proveedores. Y la diferencia, pues para el gobierno, a través de la <strong>declaración de IVA</strong>.</p>
+
+<p class="mb-8 text-lg">En estas declaraciones, las empresas tienen que informar del <strong>IVA repercutido</strong> (que es ese IVA que han cobrado a los clientes) y del <strong>IVA soportado</strong> (que es el IVA que han pagado en sus compras y gastos). El IVA soportado se puede deducir, sí, pero siempre que los gastos tengan que ver con la actividad de la empresa. Como el alquiler de la oficina, los servicios de profesionales independientes, y otros servicios que necesiten para el negocio.</p>
+
+<p class="mb-8 text-lg">La diferencia entre estos dos valores, el repercutido y el soportado, es el importe del IVA que la empresa tiene que pagar. Ojo, que a veces puede solicitar la devolución del IVA, si resulta que han pagado más del que han recibido.</p>
+
+<h3 class="mb-4">Declaración del IVA</h3>
+
+<p class="mb-8 text-lg">El proceso de declarar y pagar el IVA es una parte... crucial, vamos, de la gestión fiscal de cualquier empresa. <strong>Aquí en España, las empresas tienen que presentar declaraciones de IVA periódicamente. Pueden ser cada mes, cada trimestre o una vez al año</strong>. Todo depende del volumen de negocio que tenga la empresa.</p>
+
+<p class="mb-8 text-lg"><strong>Saber Calcular el Impuesto sobre el Valor Añadido (IVA) es, sin duda, un componente esencial de nuestro sistema fiscal aquí en España. Entenderlo bien y gestionarlo correctamente es vital, tanto si eres consumidor como si llevas una empresa</strong>. Si entiendes cómo funciona el IVA, quién tiene que presentarlo, y qué gastos te puedes deducir, pues podrás manejar mejor tus obligaciones con Hacienda y, de paso, contribuir al desarrollo económico del país. Estar al día, informado sobre las normativas y los tipos de IVA, es fundamental. Para asegurar una gestión eficiente y cumplir con lo que toca, como debe ser.</p>
+
+          
+        </div>
+      </div>
+    </div>
+  
   <!-- /Features -->
 
-  <Testimonial testimonial={testimonial} />
-  <CallToAction call_to_action={call_to_action} />
+  <!-- <Testimonial testimonial={testimonial} />
+  <CallToAction call_to_action={call_to_action} />-->
 </Base>
 
 
