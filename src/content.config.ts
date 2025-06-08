@@ -30,17 +30,17 @@ const autoresCollection = defineCollection({
     email: z.string().optional(),
     image: z.string().optional(),
     description: z.string().optional(),
-    social: z
-      .array(
-        z
-          .object({
-            name: z.string().optional(),
-            icon: z.string().optional(),
-            link: z.string().optional(),
-          })
-          .optional(),
-      )
-      .optional(),
+    // social: z
+    //   .array(
+    //     z
+    //       .object({
+    //         name: z.string().optional(),
+    //         icon: z.string().optional(),
+    //         link: z.string().optional(),
+    //       })
+    //       .optional(),
+    //   )
+    //   .optional(),
     draft: z.boolean().optional(),
     canonical: z.string().optional(), // Para la URL canónica (string)
     noindex: z.boolean().optional(),   // Para el robots meta tag (boolean)
