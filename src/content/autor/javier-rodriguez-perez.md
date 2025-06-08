@@ -1,7 +1,7 @@
 ---
 title: Javier Rodríguez Pérez
 email: contacto@calculadora-de-iva.es
-image: "/images/avatar.png"
+image: "/images/calculadora-de-iva-es.png"
 description: this is meta description
 social:
   - name: github

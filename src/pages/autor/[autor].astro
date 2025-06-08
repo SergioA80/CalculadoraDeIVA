@@ -1,59 +1,97 @@
 ---
+// src/pages/autor/[autor].astro
+// Esta página genera las páginas individuales para cada autor (ej. /autor/javier-rodriguez-perez)
+
 import BlogCard from "@/components/BlogCard.astro";
 import ImageMod from "@/components/ImageMod.astro";
-import Social from "@/components/Social.astro";
-import Base from "@/layouts/Base.astro";
-import { getSinglePage } from "@/lib/contentParser.astro";
-import { slugify } from "@/lib/utils/textConverter";
-import { render } from "astro:content";
-import { getCollection } from 'astro:content';
-import type { CollectionEntry } from 'astro:content'; 
+// No importamos el componente Social.astro si no queremos mostrar las redes sociales
+// import Social from "@/components/Social.astro"; 
 
-// get all static paths for authors
+import Base from "@/layouts/Base.astro"; // Layout base de tu plantilla
+import { getSinglePage } from "@/lib/contentParser.astro"; // Para obtener posts de blog
+import { slugify } from "@/lib/utils/textConverter"; // Para limpiar slugs de nombres
+import { render } from "astro:content"; // Para renderizar el cuerpo del Markdown del autor
+import { getCollection } from 'astro:content'; // Para obtener la colección de autores
+import type { CollectionEntry } from 'astro:content'; // Para tipar CollectionEntry
+
+// --- FUNCIÓN getStaticPaths: Genera las rutas para cada autor ---
 export async function getStaticPaths() {
+  const allAuthors = await getCollection('autores'); // Obtiene todos los autores de la colección 'autores'
 
-  const allAuthors = await getCollection('autores');
-
-   // Filtrar autores que tengan un slug válido (no undefined/null)
+  // Filtra autores que tengan un ID válido (para evitar errores)
   const validAuthors = allAuthors.filter(author => author.id);
 
-  const COLLECTION_FOLDER = "autores";
-  const authors = await getSinglePage(COLLECTION_FOLDER);
-
   const paths = validAuthors.map(author => {
-    // *** CAMBIO CLAVE AQUÍ: Generar el slug a partir de author.id ***
+    // Genera el slug para la URL a partir del ID del archivo del autor
     // author.id es el nombre del archivo con extensión (ej. "javier-rodriguez-perez.md")
-    const authorSlug = author.id.replace(/\.mdx?$/, ''); // Elimina .md o .mdx
+    const authorSlug = author.id.replace(/\.mdx?$/, ''); // Elimina .md o .mdx para un slug limpio
     
     return {
       params: {
-        // 'autor' es el nombre del parámetro en la URL (ej. /autor/[autor])
-        autor: authorSlug, // <--- Usamos el slug generado de author.id
+        // 'autor' es el nombre del parámetro dinámico en la URL (ej. /autor/[autor])
+        autor: authorSlug, // El slug limpio (ej. "javier-rodriguez-perez")
       },
-      props: { author }, 
+      // Pasamos el objeto 'author' (CollectionEntry) completo como prop a la página
+      props: { author: author as CollectionEntry<'autores'> }, 
     };
   });
   return paths;
 }
 
-const { autor } = Astro.params; // Capturamos el param 'autor'
-const { author } = Astro.props;
-const { title, social, meta_title, description, image } = author.data;
-const { Content } = await render(author);
+// --- DESESTRUCTURACIÓN DE PROPS Y DATOS ---
+const { autor } = Astro.params; // Capturamos el slug del autor de la URL (ej. "javier-rodriguez-perez")
+const { author } = Astro.props; // Obtenemos el objeto 'author' (CollectionEntry) completo de las props
 
-// get all posts by author
-const BLOG_FOLDER = "blog";
-const posts = await getSinglePage(BLOG_FOLDER);
+// Desestructuramos las propiedades del frontmatter del autor (author.data)
+// Asegúrate de que estas propiedades existan en tu src/content.config.ts para la colección 'autores'
+const { 
+  title,       // Nombre del autor (ej. "Javier Rodríguez Pérez")
+  meta_title, 
+  description, // Biografía o descripción del autor
+  image,       // Imagen del autor
+  canonical,   // Propiedad 'canonical' del frontmatter (si existe)
+  noindex      // Propiedad 'noindex' del frontmatter (si existe)
+} = author.data; 
+
+// Renderiza el cuerpo del Markdown del autor (biografía, etc.)
+const { Content } = await render(author); 
+
+// --- LÓGICA PARA METADATOS Y LAYOUT ---
+// pageTitle: El título principal de la página, usado en el <h1> del layout.
+const pageTitleForLayout = title; 
+
+// URL Canónica:
+// 1. Obtiene la URL base del sitio desde astro.config.mjs
+const siteBaseUrl = Astro.site?.toString() || 'http://localhost:4321'; 
+// 2. Construye la URL canónica automatizada usando el slug limpio del autor
+const automatedCanonical = `${siteBaseUrl}/autor/${autor}`; 
+// 3. Prioriza la URL canónica del frontmatter del autor, si no, usa la automatizada
+const finalCanonicalUrl = canonical || automatedCanonical; 
+
+// NoIndex: Prioriza el frontmatter, si no, por defecto false (indexable).
+const finalNoindex = noindex || false; 
+
+
+// --- LÓGICA PARA OBTENER Y FILTRAR POSTS POR ESTE AUTOR ---
+const BLOG_FOLDER = "blog"; // La colección de posts
+const posts = await getSinglePage(BLOG_FOLDER); // Obtiene todos los posts del blog
+
+// Filtra los posts para mostrar solo los de este autor
+// Compara el slug del autor del post (post.data.author) con el slug del autor actual (title)
 const postFilterByAuthor = posts.filter(
   (post) => slugify(post.data.author) === slugify(title)
 );
 ---
 
+<!-- --- LAYOUT Y CONTENIDO HTML DE LA PÁGINA DEL AUTOR --- -->
 <Base
-  title={title}
+  title={title}          
   meta_title={meta_title}
   description={description}
   image={image}
+  canonical={finalCanonicalUrl} 
+  noindex={finalNoindex}       
+  pageTitle={pageTitleForLayout} 
 >
   <section class="section-sm pb-0">
     <div class="container">
@@ -61,6 +99,7 @@ const postFilterByAuthor = posts.filter(
         class="row justify-center border-b border-border pb-14 dark:border-darkmode-border"
       >
         <div class="text-center lg:col-8">
+          {/* Imagen del autor */}
           {
             image && (
               <ImageMod
@@ -73,21 +112,31 @@ const postFilterByAuthor = posts.filter(
               />
             )
           }
+          {/* Nombre/Título del autor */}
           <h1 class="h3 mb-6">{title}</h1>
+          {/* Biografía del autor (contenido Markdown) */}
           <div class="content">
-            <Content />
+            <Content /> 
           </div>
-          <Social source={social} className="social-icons" />
+          {/* No se renderizan redes sociales si se eliminó la prop 'social' */}
+          {/* Si quieres redes sociales, debes añadirlas a src/content.config.ts y aquí */}
         </div>
       </div>
 
+      {/* Sección de Posts del Autor */}
       <div class="row justify-center pb-16 pt-14">
         {
-          postFilterByAuthor.map((post) => (
-            <div class="mb-12 md:col-6 lg:col-4">
-              <BlogCard data={post} />
+          postFilterByAuthor.length > 0 ? (
+            postFilterByAuthor.map((post) => (
+              <div class="mb-12 md:col-6 lg:col-4">
+                <BlogCard data={post} />
+              </div>
+            ))
+          ) : (
+            <div class="w-full text-center py-10">
+              <p>No se encontraron entradas de blog para este autor.</p>
             </div>
-          ))
+          )
         }
       </div>
     </div>
