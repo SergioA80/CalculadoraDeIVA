@@ -3,25 +3,18 @@ title: "IVA en los Alimentos Básicos 2025"
 date: 2024-07-18
 author: "Javier Rodríguez Pérez"
 image: "/images/posts/IVA-en-los-Alimentos-Basicos.webp"
+updatedDate: 2025-06-06
 
 meta_title: "Subida del IVA en Alimentos Básicos España 2025: Vuelven al 4% y 10%"
 description: "El IVA de alimentos básicos en España sube en 2025. ⚠️ Pan, leche y huevos al 4% 🍞🥛; aceite y pasta al 10% 🫒🍝. ¿Cómo afectará a tu compra? "
 categories: ["Iva"]
 tags: [
   "IVA Alimentos",
-  "Subida IVA Alimentos",
   "IVA 2025",
-  "Impuestos Alimentación",
-  "Cesta de la Compra",
   "IVA 4%",
   "IVA 10%",
-  "Aceite de Oliva IVA",
-  "Fin IVA 0%",
   "Precios Alimentos",
   "Fiscalidad España",
-  "Ahorro Compra",
-  "Inflación",
-  "Consumidores España"
 ]
 ---
 

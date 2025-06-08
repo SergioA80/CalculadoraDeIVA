@@ -3,7 +3,7 @@ title: "¿Cuánto es el IVA? Tipos impositivos de IVA en España 2025"
 date: 2024-07-09
 author: "Javier Rodríguez Pérez"
 image: "/images/posts/Cuanto-es-el-IVA-Tipos-impositivos-de-IVA-en-Espana.webp"
-
+updatedDate: 2025-06-06
 draft: false
 
 meta_title: "Cuánto es el IVA en España 2025: Tipos Impositivos (4%, 10%, 21%) y Cálculo"
@@ -12,19 +12,13 @@ categories: ["Iva"]
 tags: [
   "IVA",
   "Tipos de IVA",
-  "Cuánto es el IVA",
   "Impuesto sobre el Valor Añadido",
-  "IVA España 2025",
   "IVA Superreducido",
   "IVA Reducido",
   "IVA General",
   "Porcentaje IVA",
   "Cálculo IVA",
-  "Exenciones IVA",
   "Fiscalidad España",
-  "Impuestos Consumo",
-  "Autónomos IVA",
-  "Empresas IVA"
 ]
 ---
 

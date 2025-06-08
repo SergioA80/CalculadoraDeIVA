@@ -3,6 +3,7 @@ title: "Sujeto Pasivo en el IVA ¿Qué es?"
 date: 2024-10-30
 author: "Javier Rodríguez Pérez"
 image: "/images/posts/Sujeto-Pasivo-en-el-IVA-Que-es.jpg"
+updatedDate: 2025-06-05
 
 meta_title: "Sujeto Pasivo IVA: ¿Quién Declara el Impuesto? Guía Esencial"
 description: "¿Qué es el Sujeto Pasivo del IVA y quién es responsable de declararlo? 🤔 Te explicamos este concepto clave, la inversión del sujeto pasivo y ejemplos claros. ¡Cumple con Hacienda!"
@@ -12,15 +13,11 @@ tags: [
   "Sujeto Pasivo IVA",
   "Impuesto sobre el Valor Añadido",
   "Inversión Sujeto Pasivo",
-  "Declarar IVA",
   "Fiscalidad España",
   "IVA Intracomunitario",
   "IVA Construcción",
   "Modelo 303",
   "Obligaciones Fiscales",
-  "Empresarios IVA",
-  "Profesionales IVA",
-  "Guía Fiscal"
 ]
 ---
 

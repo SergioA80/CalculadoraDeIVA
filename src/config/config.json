@@ -4,11 +4,11 @@
     "base_url": "https://calculadora-de-iva.es",
     "base_path": "/",
     "trailing_slash": false,
-    "favicon": "/images/favicon.png",
-    "logo": "/images/logo.png",
-    "logo_darkmode": "/images/logo-darkmode.png",
-    "logo_width": "150",
-    "logo_height": "30",
+    "favicon": "/images/calculadora-de-iva-es.png",
+    "logo": "/images/calculadora-de-iva-es.png",
+    "logo_darkmode": "/images/calculadora-de-iva-es.png",
+    "logo_width": "50",
+    "logo_height": "50",
     "logo_text": "Calculadora de IVA en España"
   },
 
@@ -23,12 +23,12 @@
   },
 
   "params": {
-    "contact_form_action": "#",
-    "copyright": "Designed And Developed by Calculadora de IVA"
+    "contact_form_action": "https://formspree.io/f/mqabeerl",
+    "copyright": "Calculadora de IVA"
   },
 
   "navigation_button": {
-    "enable": true,
+    "enable": false,
     "label": "Get Started",
     "link": "https://github.com/zeon-studio/astroplate"
   },

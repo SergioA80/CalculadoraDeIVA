@@ -3,26 +3,12 @@ title: "Cómo sacar el IVA de un total: Guía con ejemplos"
 date: 2024-07-28
 author: "Javier Rodríguez Pérez"
 image: "/images/posts/Como-sacar-el-IVA-de-un-total-Guia-con-ejemplos.jpg"
-
+updatedDate: 2025-06-06
 
 meta_title: "Cómo Sacar el IVA de un Total: Guía Fácil con Fórmulas y Ejemplos"
 description: "Aprende a sacar el IVA de un total con IVA incluido. 🔢 Te explicamos la fórmula paso a paso y con ejemplos prácticos (21%, 10%, 4%). ✅ ¡Calcula la base imponible! "
 categories: ["Iva"]
-tags: [
-  "Sacar IVA",
-  "Calcular IVA Inverso",
-  "Quitar IVA",
-  "IVA Incluido",
-  "Base Imponible",
-  "Cálculo IVA",
-  "Desglosar IVA",
-  "Fórmula IVA",
-  "Ejemplos IVA",
-  "Impuestos",
-  "Contabilidad",
-  "Finanzas Personales",
-  "Facturación"
-]
+tags: ["Cálculo IVA"]
 ---
 
 **A ver, ¿que necesitas saber cómo sacar el IVA de un precio total y no tienes ni idea de por dónde meterle mano? Pues, ¡tranqui! Ya no tienes que buscar más. En esta guía, te vamos a desmenuzar cada pasito para que entiendas y apliques eso de calcular el IVA como si nada. Sigue leyendo y verás qué fácil es quitarle el IVA a un precio.**

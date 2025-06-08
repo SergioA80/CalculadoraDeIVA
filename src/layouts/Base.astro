@@ -39,10 +39,11 @@ export interface Props {
   noindex?: boolean;
   canonical?: string;
   author?: string;
+  pageTitle: string;
 }
 
 // destructure frontmatter
-const { title, author, meta_title, description, image, noindex, canonical } =
+const { title, author, meta_title, description, image, noindex, canonical, pageTitle } =
   Astro.props;
 ---
 

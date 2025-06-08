@@ -17,12 +17,13 @@ const blogCollection = defineCollection({
     // ¡NUEVO! Propiedades para SEO
     canonical: z.string().optional(), // Para la URL canónica (string)
     noindex: z.boolean().optional(),   // Para el robots meta tag (boolean)
+    updatedDate: z.date().optional(), // Fecha de última actualización (opcional)
   }),
 });
 
 // Author collection schema
-const authorsCollection = defineCollection({
-  loader: glob({ pattern: "**/*.{md,mdx}", base: "src/content/authors" }),
+const autoresCollection = defineCollection({
+  loader: glob({ pattern: "**/*.{md,mdx}", base: "src/content/autor" }),
   schema: z.object({
     title: z.string(),
     meta_title: z.string().optional(),
@@ -41,7 +42,10 @@ const authorsCollection = defineCollection({
       )
       .optional(),
     draft: z.boolean().optional(),
+    canonical: z.string().optional(), // Para la URL canónica (string)
+    noindex: z.boolean().optional(),   // Para el robots meta tag (boolean)
   }),
+  
 });
 
 // Pages collection schema
@@ -53,6 +57,8 @@ const pagesCollection = defineCollection({
     description: z.string().optional(),
     image: z.string().optional(),
     draft: z.boolean().optional(),
+    canonical: z.string().optional(), // Para la URL canónica (string)
+    noindex: z.boolean().optional(),   // Para el robots meta tag (boolean)
   }),
 });
 
@@ -79,6 +85,8 @@ const contactCollection = defineCollection({
     description: z.string().optional(),
     image: z.string().optional(),
     draft: z.boolean().optional(),
+    noindex: z.boolean().optional(), // <--- Asegúrate de que esta esté
+    canonical: z.string().optional(), // <--- Y esta
   }),
 });
 
@@ -157,7 +165,7 @@ export const collections = {
   // Pages
   homepage: homepageCollection,
   blog: blogCollection,
-  authors: authorsCollection,
+  autores: autoresCollection,
   pages: pagesCollection,
   about: aboutCollection,
   contact: contactCollection,

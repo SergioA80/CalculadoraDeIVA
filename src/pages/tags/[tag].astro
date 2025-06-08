@@ -1,45 +1,106 @@
 ---
+// src/pages/tags/[tag].astro
+
 import BlogCard from "@/components/BlogCard.astro";
 import Base from "@/layouts/Base.astro";
 import { getSinglePage } from "@/lib/contentParser.astro";
-import { getTaxonomy } from "@/lib/taxonomyParser.astro";
+import { getTaxonomy, getAllTaxonomy } from "@/lib/taxonomyParser.astro"; // Asegúrate de importar getAllTaxonomy
 import { sortByDate } from "@/lib/utils/sortFunctions";
 import taxonomyFilter from "@/lib/utils/taxonomyFilter";
 import PageHeader from "@/partials/PageHeader.astro";
+import PostSidebar from "@/partials/PostSidebar.astro"; // Asegúrate de importar PostSidebar
+
+import { humanize, slugify } from "@/lib/utils/textConverter";
+import type { CollectionEntry } from "astro:content";
 
 export async function getStaticPaths() {
-  const BLOG_FOLDER = "blog";
+  const BLOG_FOLDER = "blog"; // Declarada dentro de getStaticPaths
   const tags = await getTaxonomy(BLOG_FOLDER, "tags");
 
+  // Necesitamos todos los posts para filtrar y contar
+  const posts = await getSinglePage(BLOG_FOLDER); 
+
   return tags.map((tag) => {
+    const postsInThisTag = taxonomyFilter(posts, "tags", tag);
+    
+    // Configura la página para NO indexar, independientemente del número de posts.
+    const shouldNoindexTagPage = true; 
+
     return {
-      params: { tag },
+      params: { tag: slugify(tag) }, // El slug para la URL del tag (ej. /tags/iva)
+      props: {
+        tag: tag, // El nombre original del tag (ej. "IVA")
+        postsInThisTag: postsInThisTag, // Los posts filtrados para este tag
+        noindexTagPage: shouldNoindexTagPage, // Pasamos la decisión de noindex (siempre true)
+      },
     };
   });
 }
 
-const { tag } = Astro.params;
+// --- DESESTRUCTURACIÓN DE PROPS RECIBIDAS ---
+const { tag, postsInThisTag, noindexTagPage } = Astro.props;
 
-// get posts by tag
-const BLOG_FOLDER = "blog";
-const posts = await getSinglePage(BLOG_FOLDER);
-const filterByTags = taxonomyFilter(posts, "tags", tag!);
-const sortedPosts = sortByDate(filterByTags);
+// --- LÓGICA DE METADATOS Y PROPS PARA BASELAYOUT ---
+const pageTitle = `Posts con la etiqueta: ${humanize(tag)}`;
+const metaDescription = `Explora todos los artículos relacionados con la etiqueta ${humanize(tag)}.`;
+
+
+// --- LÓGICA DE URL CANÓNICA ---
+// La URL canónica para esta página de tag es su propia URL completa y actual.
+const canonicalUrl = Astro.url.href;
+
+
+// --- OBTENCIÓN DE DATOS PARA EL SIDEBAR ---
+const BLOG_FOLDER = "blog"; // Declarada de nuevo para el ámbito de esta sección
+const allCategoriesForSidebar = await getAllTaxonomy(BLOG_FOLDER, "categories");
+const categoriesForSidebar = await getTaxonomy(BLOG_FOLDER, "categories");
+const tagsForSidebar = await getTaxonomy(BLOG_FOLDER, "tags");
+
+// Ordena los posts ya filtrados y pasados como prop
+const sortedPosts = sortByDate(postsInThisTag); 
+
 ---
 
-<Base title={tag}>
-  <PageHeader title={tag} />
-  <div class="section-sm pb-0">
+<!-- --- LAYOUT Y CONTENIDO HTML --- -->
+<Base
+  title={pageTitle}
+  meta_title={pageTitle}
+  description={metaDescription}
+  canonical={canonicalUrl}
+  noindex={noindexTagPage} 
+  pageTitle={pageTitle}
+>
+  <PageHeader title={pageTitle} />
+  <section class="section">
     <div class="container">
-      <div class="row">
-        {
-          sortedPosts.map((post) => (
-            <div class="mb-14 md:col-6 lg:col-4">
-              <BlogCard data={post} />
-            </div>
-          ))
-        }
+      <div class="row gx-5">
+        {/* Blog posts */}
+        <div class="lg:col-8">
+          <div class="row">
+            {
+              sortedPosts.length > 0 ? (
+                sortedPosts.map((post) => (
+                  <div class="mb-14 md:col-6">
+                    <BlogCard data={post} />
+                  </div>
+                ))
+              ) : (
+                <div class="w-full text-center py-10">
+                  <p>No se encontraron entradas para esta etiqueta.</p>
+                </div>
+              )
+            }
+          </div>
+          {/* Paginación si fuera necesaria (tu plantilla no la incluía en este archivo) */}
+        </div>
+
+        {/* Sidebar */}
+        <PostSidebar
+          categories={categoriesForSidebar}
+          tags={tagsForSidebar}
+          allCategories={allCategoriesForSidebar}
+        />
       </div>
     </div>
-  </div>
+  </section>
 </Base>

@@ -3,25 +3,17 @@ title: "Subida del IVA en Alimentos Básicos: ¿Qué cambia a partir de octubre 
 date: 2024-10-07
 author: "Javier Rodríguez Pérez"
 image: "/images/posts/Subida-del-IVA-en-Alimentos-Basicos-octubre-de-2024.jpg"
-
+updatedDate: 2025-06-06
 
 meta_title: "Subida IVA Alimentos (Oct 2024 - 2025): Cómo Afecta tu Compra"
 description: "El IVA de alimentos básicos sube en octubre 2024 (al 2% y 7,5%) y se prevé más en 2025 (4% y 10%) 🍞🥛🫒. ¿Cuánto más cara será tu cesta de la compra? 🛒"
 categories: ["Iva"]
 tags: [
   "IVA Alimentos",
-  "Subida IVA",
-  "IVA Octubre 2024",
   "IVA 2025",
   "Cesta de la Compra",
   "Precios Alimentos",
-  "Inflación España",
-  "Ahorro Doméstico",
   "Impuestos Alimentación",
-  "OCU",
-  "IVA Pan Leche",
-  "IVA Aceite Pasta",
-  "Fiscalidad Alimentos"
 ]
 ---
 

@@ -3,25 +3,12 @@ title: "¿Cuándo se puede aplicar el 10 de iva en reformas?"
 date: 2024-07-22
 author: "Javier Rodríguez Pérez"
 image: "/images/posts/Cuando-se-puede-aplicar-el-10-de-iva-en-reformas-calculadora-de-iva.jpg"
+updatedDate: 2025-06-05
 
 meta_title: "IVA del 10% en Reformas de Vivienda: Ahorra en tus Obras (Guía 2025)"
 description: " ¿Sabías que puedes pagar solo el 10% de IVA en reformas? 🏠 Te explicamos cuándo y cómo aplicar el tipo reducido en obras de renovación y reparación. 💰🛠️ ¡Ahorra dinero!"
 categories: ["Iva"]
-tags: [
-  "IVA Reformas",
-  "IVA 10%",
-  "IVA Reducido Reformas",
-  "Reformas Vivienda",
-  "Ahorro IVA",
-  "Impuestos Reformas",
-  "Renovación Vivienda",
-  "Obras en Casa IVA",
-  "Fiscalidad Reformas",
-  "Condiciones IVA 10",
-  "Materiales Reforma IVA",
-  "IVA Construcción",
-  "Autónomos Reformas"
-]
+tags: ["IVA 10%", "IVA Construcción"]
 ---
 
 **Meterse en reformas en casa... uff, puede ser un lío de dinero y de cabeza, ¿verdad? Y cuando empiezas a sumar, uno de los pellizcos importantes es el de los impuestos. Pero ojo, que aquí viene la buena noticia: en el tema del IVA para las obras de renovación y reparación, no siempre tienes que pagar el 21% general. Hay casos, y más de los que la gente cree, en los que se puede aplicar un IVA reducido, ¡del 10%! Y eso, amigo, es un buen pellizco que te ahorras. En este artículo vamos a desmenuzar cuándo y cómo puedes acogerte a este IVA más simpático en tus reformas, con ejemplos para que lo veas clarinete.**

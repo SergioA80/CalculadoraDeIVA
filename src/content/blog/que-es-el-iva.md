@@ -3,6 +3,7 @@ title: "¿Qué es el IVA o Impuesto sobre el Valor Añadido? 2025"
 date: 2024-07-02
 author: "Javier Rodríguez Pérez"
 image: "/images/posts/Que-es-el-IVA-o-Impuesto-sobre-el-Valor-Anadido.jpg"
+updatedDate: 2025-06-06
 
 meta_title: "IVA 2025: Qué es, Tipos, Cálculo y Declaración en España | Guía Completa"
 description: "Descubre qué es el IVA (Impuesto sobre el Valor Añadido) en España 2025. 📘 Guía completa sobre sus tipos (21%, 10%, 4%), cómo calcularlo, declararlo y su impacto."
@@ -15,14 +16,7 @@ tags: [
   "Modelo 303",
   "Tipos de IVA",
   "Cálculo IVA",
-  "Declaración IVA",
-  "IVA Deducible",
-  "IVA Soportado",
-  "IVA Repercutido",
-  "Autónomos",
-  "Empresas",
   "Guía IVA",
-  "Gastos Deducibles IVA"
 ]
 ---
 

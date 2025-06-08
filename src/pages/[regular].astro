@@ -1,42 +1,72 @@
 ---
+// src/pages/[regula].astro
+
 import Base from "@/layouts/Base.astro";
 import { getSinglePage } from "@/lib/contentParser.astro";
 import PageHeader from "@/partials/PageHeader.astro";
-import { render } from "astro:content";
+import { render } from "astro:content"; // Necesario para render(page)
+import type { CollectionEntry } from "astro:content"; // Necesario para tipar 'page'
 
-// get static paths for all pages
+// --- NUEVAS IMPORTACIONES ---
+import { slugify } from "@/lib/utils/textConverter"; // Para limpiar slugs si es necesario
+// --- FIN NUEVAS IMPORTACIONES ---
+
+// get static paths for all pages (de la colección 'pages')
 export async function getStaticPaths() {
-  const COLLECTION_FOLDER = "pages";
+  const COLLECTION_FOLDER = "pages"; // Esta es la carpeta 'src/content/pages/'
 
-  const pages = await getSinglePage(COLLECTION_FOLDER);
+  const pages = await getSinglePage(COLLECTION_FOLDER); // Obtiene las páginas de esta colección
 
-  const paths = pages.map((page) => ({
-    params: {
-      regular: page.id,
-    },
-    props: { page },
-  }));
+  const paths = pages.map((page) => {
+    // Generar el slug a partir de page.id para el param 'regular'
+    const pageSlug = page.id.replace(/\.mdx?$/, ''); // Elimina .md o .mdx
+    
+    return {
+      params: {
+        regular: pageSlug, // <--- Este es el slug de la URL para la página
+      },
+      props: { page: page as CollectionEntry<'pages'> }, // Pasamos el objeto page completo
+    };
+  });
   return paths;
 }
 
-const { page } = Astro.props;
-const { title, meta_title, description, image } = page.data;
-const { Content } = await render(page);
+const { page } = Astro.props; // 'page' es el objeto CollectionEntry<'pages'>
+const { title, meta_title, description, image, canonical, noindex } = page.data; // Desestructuramos también canonical y noindex del frontmatter
+
+const { Content } = await render(page); // Para renderizar el cuerpo del Markdown
+
+// --- LÓGICA DE PROPS PARA BASELAYOUT ---
+// pageTitle: Siempre necesario para Base.astro
+const pageTitleForLayout = title; // Usamos el 'title' del frontmatter como pageTitle
+
+// URL Canónica: Prioriza el frontmatter, si no, genera automáticamente.
+const siteBaseUrl = Astro.site?.toString() || 'http://localhost:4321';
+const pageSlugForCanonical = page.id.replace(/\.mdx?$/, ''); // El slug de la página actual
+const automatedCanonical = `${siteBaseUrl}${pageSlugForCanonical}`; 
+const finalCanonicalUrl = canonical || automatedCanonical; // Usa canonical del frontmatter o el automatizado
+
+// NoIndex: Prioriza el frontmatter, si no, por defecto false.
+const finalNoindex = noindex || false; 
+
 ---
 
 <Base
-  title={title}
+  title={pageTitleForLayout} 
   meta_title={meta_title}
   description={description}
   image={image}
+  canonical={finalCanonicalUrl}  
+  noindex={finalNoindex}        
+  pageTitle={pageTitleForLayout}  
 >
-  <PageHeader title={title} />
+  <PageHeader title={title} /> {/* PageHeader de tu plantilla, usa el título del frontmatter */}
   <section class="section-sm">
     <div class="container">
       <div class="row justify-center">
         <div class="lg:col-10">
           <div class="content">
-            <Content />
+            <Content /> {/* Renderiza el contenido Markdown/MDX */}
           </div>
         </div>
       </div>

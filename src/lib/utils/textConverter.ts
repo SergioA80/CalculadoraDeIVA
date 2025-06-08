@@ -2,8 +2,30 @@ import { slug } from "github-slugger";
 import { marked } from "marked";
 
 // slugify
-export const slugify = (content: string) => {
-  return slug(content);
+export const slugify = (content: string): string => {
+  // Asegúrate de que el 'content' no sea null o undefined
+  if (!content) return '';
+
+  // 1. Normaliza caracteres Unicode (ej. 'á' -> 'a', 'ñ' -> 'n')
+  //    (NFD: Normalization Form Canonical Decomposition)
+  //    (reemplaza diacríticos con una cadena vacía)
+  let cleaned = content.normalize('NFD').replace(/[\u0300-\u036f]/g, '');
+
+  // 2. Procesa con github-slugger para manejar espacios, mayúsculas, etc.
+  //    github-slugger ya debería hacer esto, pero lo hacemos explícito para depurar.
+  cleaned = slug(cleaned);
+
+  // 3. Elimina cualquier caracter no alfanumérico que no sea un guión,
+  //    y maneja múltiples guiones.
+  //    Esto asegura que sea 100% ASCII y solo letras, números y guiones.
+  cleaned = cleaned
+    .toLowerCase()
+    .trim()
+    .replace(/\s+/g, '-')
+    .replace(/[^\w-]+/g, '')
+    .replace(/--+/g, '-');
+
+  return cleaned;
 };
 
 // markdownify

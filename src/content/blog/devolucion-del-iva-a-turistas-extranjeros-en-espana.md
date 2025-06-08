@@ -3,26 +3,17 @@ title: "Devolución del IVA a turistas extranjeros en España"
 date: 2024-07-11
 author: "Javier Rodríguez Pérez"
 image: "/images/posts/Devolucion-del-IVA-a-turistas-extranjeros-en-Espana.webp"
+updatedDate: 2025-06-06
 
 meta_title: "Devolución IVA Turistas Extranjeros España: Guía Completa 2025"
 description: "¿Turista extranjero en España? 🌍 Aprende cómo solicitar la devolución del IVA (Tax Free) de tus compras. Requisitos, pasos y consejos para un reembolso exitoso."
 categories: ["Iva"]
 tags: [
-  "Devolución IVA Turistas",
-  "IVA España",
-  "Tax Free España",
-  "Reembolso IVA Turistas",
-  "Turismo España IVA",
-  "Compras Sin IVA España",
-  "Aduana IVA España",
-  "Formulario Tax Free",
-  "Requisitos Devolución IVA",
-  "Viajar a España IVA",
-  "Extranjeros IVA España",
-  "IVA No Residentes",
-  "Proceso Devolución IVA",
-  "Consultar Devolución IVA",
-  "Impuestos Turistas España"
+ "Impuesto sobre el Valor Añadido",
+ "Fiscalidad España",
+ "Impuestos España",
+ "Fiscalidad",
+ "Impuestos Turistas España"
 ]
 ---
 

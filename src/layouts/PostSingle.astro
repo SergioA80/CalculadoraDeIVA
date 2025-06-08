@@ -6,7 +6,7 @@ import { getSinglePage } from "@/lib/contentParser.astro";
 import dateFormat from "@/lib/utils/dateFormat";
 import similarItems from "@/lib/utils/similarItems";
 import { humanize, markdownify, slugify } from "@/lib/utils/textConverter";
-import { FaRegClock, FaRegFolder, FaRegUserCircle } from "react-icons/fa";
+import { FaRegClock, FaRegFolder, FaRegUserCircle, FaRegCalendarAlt } from "react-icons/fa";
 import ImageMod from "@/components/ImageMod.astro"; // <-- Asegúrate de que esta ruta sea correcta
 import { render, type CollectionEntry } from "astro:content"; 
 
@@ -28,7 +28,7 @@ const similarPosts = similarItems(post, posts); // Post es el post actual, posts
 const { Content } = await render(post);
 
 // Desestructurar los datos del frontmatter del post
-const { title, description, author, categories, image, date, tags } = post.data;
+const { title, description, author, categories, image, date, tags, updatedDate } = post.data;
 
 // Generar el slug limpio para la URL si no viene en post.slug
 const postSlugForShare = post.id.replace(/\.mdx?$/, ''); 
@@ -58,7 +58,7 @@ const postSlugForShare = post.id.replace(/\.mdx?$/, '');
         <h1 set:html={markdownify(title)} class="h2 mb-4" />
         <ul class="mb-4">
           <li class="mr-4 inline-block">
-            <a href={`/authors/${slugify(author)}`}>
+            <a href={`/autor/${slugify(author)}`}>
               <FaRegUserCircle className={"mr-2 -mt-1 inline-block"} />
               {humanize(author)}
             </a>
@@ -77,6 +77,10 @@ const postSlugForShare = post.id.replace(/\.mdx?$/, '');
           <li class="mr-4 inline-block">
             <FaRegClock className={"mr-2 -mt-1 inline-block"} />
             {dateFormat(date)}
+          </li>
+          <li class="mr-4 inline-block">
+              <FaRegCalendarAlt className={"mr-2 -mt-1 inline-block"} />
+              <b>Actualizado:</b> {dateFormat(updatedDate)}
           </li>
         </ul>
         <div class="content mb-10">

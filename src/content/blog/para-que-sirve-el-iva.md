@@ -3,25 +3,20 @@ title: "¿Para qué sirve el IVA?"
 date: 2024-07-30
 author: "Javier Rodríguez Pérez"
 image: "/images/posts/Para-que-sirve-el-IVA.webp"
-
+updatedDate: 2025-06-05
 
 meta_title: "¿Para Qué Sirve el IVA? Entiende su Propósito y Cómo Te Afecta"
 description: "Descubre para qué sirve el IVA 💰: financia servicios públicos (educación, sanidad) y cómo funciona este impuesto indirecto que pagamos todos. ✅ ¡Entiéndelo! "
 categories: ["Iva"]
 tags: [
   "IVA",
-  "Impuesto al Valor Agregado",
-  "Para qué sirve el IVA",
-  "Funcionamiento del IVA",
-  "Propósito del IVA",
-  "Financiación Pública",
-  "Servicios Públicos",
-  "Impuesto al Consumo",
-  "Impuestos Indirectos",
-  "Economía",
+  "Impuesto sobre el Valor Añadido",
   "Fiscalidad",
-  "Entender IVA",
-  "Impacto del IVA"
+  "Impuestos España",
+  "Modelo 303",
+  "Tipos de IVA",
+  "Cálculo IVA",
+  "Guía IVA",
 ]
 ---
 

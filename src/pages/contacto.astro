@@ -1,0 +1,97 @@
+---
+import config from "@/config/config.json";
+import Base from "@/layouts/Base.astro";
+import PageHeader from "@/partials/PageHeader.astro";
+import { getEntry } from "astro:content";
+import type { CollectionEntry } from "astro:content";
+
+const contact = (await getEntry(
+  "contact",
+  "-index"
+)) as CollectionEntry<"contact">;
+const { contact_form_action }: { contact_form_action: string } = config.params;
+const { title, description, meta_title, image, noindex, canonical } = contact.data;
+---
+
+<Base
+  title={title}
+  meta_title={meta_title}
+  description={description}
+  image={image}
+  noindex={noindex}   
+  canonical={canonical} 
+>
+  <PageHeader title={title} />
+  <section id="formulario" class="section-sm">
+    <div class="container">
+      <div class="row">
+        <div class="mx-auto md:col-10 lg:col-6">
+          <form action={contact_form_action} method="POST">
+            <div class="mb-6">
+              <label for="name" class="form-label">
+                Nombre completo <span class="text-red-500">*</span>
+              </label>
+              <input
+                id="name"
+                name="name"
+                class="form-input"
+                placeholder="Tu nombre"
+                type="text"
+              />
+            </div>
+            <div class="mb-6">
+              <label for="email" class="form-label">
+                Email <span class="text-red-500">*</span>
+              </label>
+              <input
+                id="email"
+                name="email"
+                class="form-input"
+                placeholder="Florentino@email.com"
+                type="email"
+              />
+            </div>
+            <div class="mb-6">
+              <label for="message" class="form-label">
+                Mensaje <span class="text-red-500">*</span>
+              </label>
+              <textarea
+                id="message"
+                name="message"
+                class="form-input"
+                placeholder="Tu mensaje..."
+                rows="8"></textarea>
+            </div>
+            <button type="submit" class="btn btn-primary">Enviar</button>
+          </form>
+        </div>
+
+        <div class="lg:col-8 mt-15 prose dark:prose-invert max-w-none mx-auto">
+          <p>En <strong><a href="https://calculadora-de-iva.es/">Calculadora-de-IVA.es</a></strong>, estamos comprometidos a brindarle el mejor soporte y asistencia en todo lo relacionado con el cálculo del IVA. Si tiene alguna pregunta, necesita asistencia personalizada o desea más información sobre nuestros servicios, no dude en ponerse en contacto con nosotros. Nuestro equipo de expertos en fiscalidad y contabilidad está aquí para ayudarle a navegar por sus obligaciones fiscales con confianza y facilidad.</p>
+
+          <h2>Información de Contacto</h2>
+
+          <p><strong>Correo Electrónico:</strong> Para consultas generales y soporte técnico, puede enviarnos un correo electrónico a contacto@calculadora-de-iva.es. Nos esforzamos por responder a todos los correos electrónicos en un plazo de 24 horas hábiles.</p>
+
+          <h2>Redes Sociales</h2>
+
+          <p>Manténgase al día con las últimas actualizaciones y noticias siguiéndonos en nuestras redes sociales:</p>
+
+          <ul>
+            <li><strong>Facebook:</strong> Calculadora de IVA</li>
+
+            <li><strong>Twitter:</strong> @CalculadoraIVA</li>
+
+            <li><strong>LinkedIn:</strong> Calculadora de IVA</li>       
+          </ul>
+
+          <h2>Formulario de Contacto</h2>
+
+          <p>También puede ponerse en contacto con nosotros a través de nuestro formulario de contacto en línea. Simplemente complete sus datos y su consulta, y uno de nuestros expertos se pondrá en contacto con usted lo antes posible. Puede acceder al formulario de contacto haciendo clic <a href="#formulario">aquí</a>.</p>
+
+          <p>Gracias por elegir <strong>Calculadora-de-IVA.es</strong>. Estamos aquí para hacer que el manejo del IVA sea sencillo y accesible para todos.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+</Base>

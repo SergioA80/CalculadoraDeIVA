@@ -1,46 +1,101 @@
 ---
+// src/pages/categories/[category].astro
+
 import BlogCard from "@/components/BlogCard.astro";
 import Base from "@/layouts/Base.astro";
 import { getSinglePage } from "@/lib/contentParser.astro";
-import { getTaxonomy } from "@/lib/taxonomyParser.astro";
+import { getTaxonomy, getAllTaxonomy } from "@/lib/taxonomyParser.astro";
 import { sortByDate } from "@/lib/utils/sortFunctions";
 import taxonomyFilter from "@/lib/utils/taxonomyFilter";
 import PageHeader from "@/partials/PageHeader.astro";
+import PostSidebar from "@/partials/PostSidebar.astro";
 
-// get static paths for all categories
+import { humanize, slugify } from "@/lib/utils/textConverter";
+import type { CollectionEntry } from "astro:content";
+
+// --- Mantenemos esta declaración si la necesitas fuera de getStaticPaths,
+// --- pero para el cálculo de noindex, la declararemos DENTRO de getStaticPaths.
+// const MIN_POSTS_FOR_INDEXING_CATEGORY = 2; 
+
 export async function getStaticPaths() {
-  const BLOG_FOLDER = "blog";
+  const BLOG_FOLDER = "blog"; // Declarada dentro de getStaticPaths
+  
+  // *** ¡CAMBIO CLAVE: Declara MIN_POSTS_FOR_INDEXING_CATEGORY DENTRO de getStaticPaths! ***
+  const MIN_POSTS_FOR_INDEXING_CATEGORY = 2; // <-- ¡AQUÍ!
+
   const categories = await getTaxonomy(BLOG_FOLDER, "categories");
 
+  // Necesitamos todos los posts para filtrar y contar
+  const posts = await getSinglePage(BLOG_FOLDER); 
+
   return categories.map((category) => {
+    const postsInThisCategory = taxonomyFilter(posts, "categories", category);
+    const shouldNoindexCategoryPage = true
+
     return {
-      params: { category },
+      params: { category: slugify(category) },
+      props: {
+        category: category,
+        postsInThisCategory: postsInThisCategory,
+        noindexCategoryPage: shouldNoindexCategoryPage,
+      },
     };
   });
 }
 
-const { category } = Astro.params;
+const { category, postsInThisCategory, noindexCategoryPage } = Astro.props;
 
-// get posts by category
-const BLOG_FOLDER = "blog";
-const posts = await getSinglePage(BLOG_FOLDER);
-const filterByCategories = taxonomyFilter(posts, "categories", category!);
-const sortedPosts = sortByDate(filterByCategories);
+// --- LÓGICA DE METADATOS Y PROPS PARA BASELAYOUT ---
+const pageTitle = `Posts en la categoría: ${humanize(category)}`;
+const metaDescription = `Explora todos los artículos relacionados con la categoría ${humanize(category)}.`;
+const canonicalUrl = Astro.url.href;
+
+// --- OBTENCIÓN DE DATOS PARA EL SIDEBAR ---
+const BLOG_FOLDER = "blog"; // Declarada de nuevo para el ámbito de esta sección
+const allCategoriesForSidebar = await getAllTaxonomy(BLOG_FOLDER, "categories");
+const categoriesForSidebar = await getTaxonomy(BLOG_FOLDER, "categories");
+const tagsForSidebar = await getTaxonomy(BLOG_FOLDER, "tags");
+
+const sortedPosts = sortByDate(postsInThisCategory); 
+
 ---
 
-<Base title={category}>
-  <PageHeader title={category} />
-  <div class="section-sm pb-0">
+<Base
+  title={pageTitle}
+  meta_title={pageTitle}
+  description={metaDescription}
+  canonical={canonicalUrl}
+  noindex={noindexCategoryPage}
+  pageTitle={pageTitle}
+>
+  <PageHeader title={pageTitle} />
+  <section class="section">
     <div class="container">
-      <div class="row">
-        {
-          sortedPosts.map((post) => (
-            <div class="mb-14 md:col-6 lg:col-4">
-              <BlogCard data={post} />
-            </div>
-          ))
-        }
+      <div class="row gx-5">
+        <div class="lg:col-8">
+          <div class="row">
+            {
+              sortedPosts.length > 0 ? (
+                sortedPosts.map((post) => (
+                  <div class="mb-14 md:col-6">
+                    <BlogCard data={post} />
+                  </div>
+                ))
+              ) : (
+                <div class="w-full text-center py-10">
+                  <p>No se encontraron entradas para esta categoría.</p>
+                </div>
+              )
+            }
+          </div>
+        </div>
+
+        <PostSidebar
+          categories={categoriesForSidebar}
+          tags={tagsForSidebar}
+          allCategories={allCategoriesForSidebar}
+        />
       </div>
     </div>
-  </div>
+  </section>
 </Base>

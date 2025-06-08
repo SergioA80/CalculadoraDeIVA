@@ -3,22 +3,12 @@
     {
       "name": "facebook",
       "icon": "FaFacebook",
-      "link": "https://www.facebook.com/"
+      "link": "https://www.facebook.com/CalculadoraIVA"
     },
     {
       "name": "twitter",
       "icon": "FaTwitter",
-      "link": "https://twitter.com/"
-    },
-    {
-      "name": "github",
-      "icon": "FaGithub",
-      "link": "https://www.github.com/"
-    },
-    {
-      "name": "linkedin",
-      "icon": "FaLinkedin",
-      "link": "https://www.linkedin.com/"
+      "link": "https://x.com/CalculadoraIVA"
     }
   ]
 }

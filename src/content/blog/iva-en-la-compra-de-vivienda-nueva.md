@@ -3,24 +3,14 @@ title: "IVA en la compra de Vivienda Nueva"
 date: 2024-08-21
 author: "Javier Rodríguez Pérez"
 image: "/images/posts/IVA-en-la-compra-de-Vivienda-Nueva.jpg"
+updatedDate: 2025-06-06
 
 meta_title: "IVA en Compra de Vivienda Nueva España: Guía Completa (10%, AJD y Más)"
 description: "Todo sobre el IVA al comprar vivienda nueva en España: 🏠 tipo del 10%, diferencias con ITP, AJD y otros impuestos. 💰 ¡Calcula y planifica tu compra!"
 categories: ["Iva"]
 tags: [
-  "IVA Vivienda Nueva",
-  "Comprar Vivienda Impuestos",
-  "IVA 10% Vivienda",
-  "Impuestos Compra Casa",
-  "AJD Vivienda",
-  "ITP vs IVA",
-  "Vivienda Nueva España",
-  "Fiscalidad Inmobiliaria",
-  "Gastos Compra Vivienda",
-  "Calculadora IVA Vivienda",
-  "Impuesto Transmisiones Patrimoniales",
-  "Notaría y Registro",
-  "VPO IVA"
+  "Impuestos España",
+  "Impuesto sobre el Valor Añadido",
 ]
 ---
 

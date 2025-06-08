@@ -3,25 +3,14 @@ title: "Modelo 130 AEAT: Todo lo que Necesitas Saber para una Gestión Fiscal Ef
 date: 2024-08-05
 author: "Javier Rodríguez Pérez"
 image: "/images/posts/Modelo-130-AEAT-Todo-lo-que-Necesitas-Saber-para-una-Gestion-Fiscal-Efectiva.jpg"
-
+updatedDate: 2025-06-06
 
 meta_title: "Modelo 130 AEAT: Guía Completa para Autónomos (Pago Fraccionado IRPF)"
 description: "Todo sobre el Modelo 130 AEAT para autónomos: 📝 qué es, quién lo presenta, cómo calcular el pago fraccionado del IRPF, gastos deducibles y fechas. ✅ ¡Gestiona tus impuestos!"
 categories: ["Iva"]
 tags: [
-  "Modelo 130",
-  "IRPF Autónomos",
-  "AEAT",
-  "Hacienda",
-  "Pago Fraccionado IRPF",
   "Autónomos España",
   "Obligaciones Fiscales",
-  "Impuestos Autónomos",
-  "Declaración Trimestral",
-  "Gastos Deducibles IRPF",
-  "Gestión Fiscal",
-  "Tributación Autónomos",
-  "Calendario Fiscal"
 ]
 ---
 

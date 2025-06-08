@@ -3,6 +3,7 @@ title: "Inversión del Sujeto Pasivo del IVA: Guía Completa"
 date: 2024-10-17
 author: "Javier Rodríguez Pérez"
 image: "/images/posts/Inversion-del-Sujeto-Pasivo-del-IVA-ejemplos.jpg"
+updatedDate: 2025-06-05
 
 meta_title: "Inversión Sujeto Pasivo IVA: Guía Completa (Qué es y Cuándo Aplica)"
 description: "Descubre qué es la Inversión del Sujeto Pasivo del IVA y cuándo aplica. 🔎 Guía con ejemplos (construcción, intracomunitario), requisitos (ROI) y cómo facturar. ¡Optimiza tu fiscalidad!"
@@ -11,16 +12,10 @@ tags: [
   "IVA",
   "Inversión Sujeto Pasivo",
   "Sujeto Pasivo IVA",
-  "Autoliquidación IVA",
   "IVA Intracomunitario",
   "IVA Construcción",
-  "ROI IVA",
-  "Facturación sin IVA",
-  "Fiscalidad Empresas",
   "Guía IVA",
-  "Operaciones Intracomunitarias",
   "Impuestos España",
-  "Prevención Fraude Fiscal"
 ]
 ---
 
