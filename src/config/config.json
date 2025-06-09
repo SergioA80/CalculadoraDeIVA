@@ -34,8 +34,8 @@
   },
 
   "google_tag_manager": {
-    "enable": false,
-    "gtm_id": "GTM-XXXXXX"
+    "enable": true,
+    "gtm_id": "GTM-P9V7CPDW"
   },
 
   "disqus": {

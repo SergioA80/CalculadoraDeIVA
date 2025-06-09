@@ -30,35 +30,35 @@ export default defineConfig({
         page !== 'https://calculadora-de-iva.es/sobre-nosotros' &&
         page !== 'https://calculadora-de-iva.es/tags/*' &&
         page !== 'https://calculadora-de-iva.es/tags/autonomos-espana' &&
-page !== 'https://calculadora-de-iva.es/tags/calculo-iva' &&
-page !== 'https://calculadora-de-iva.es/tags/cesta-de-la-compra' &&
-page !== 'https://calculadora-de-iva.es/tags/dia-sin-iva' &&
-page !== 'https://calculadora-de-iva.es/tags/FFindex' &&
-page !== 'https://calculadora-de-iva.es/tags/fiscalidad' &&
-page !== 'https://calculadora-de-iva.es/tags/fiscalidad-espana' &&
-page !== 'https://calculadora-de-iva.es/tags/guia-iva' &&
-page !== 'https://calculadora-de-iva.es/tags/impuesto-sobre-el-valor-anadido' &&
-page !== 'https://calculadora-de-iva.es/tags/impuestos-alimentacion' &&
-page !== 'https://calculadora-de-iva.es/tags/impuestos-espana' &&
-page !== 'https://calculadora-de-iva.es/tags/impuestos-turistas-espana' &&
-page !== 'https://calculadora-de-iva.es/tags/inversion-sujeto-pasivo' &&
-page !== 'https://calculadora-de-iva.es/tags/iva' &&
-page !== 'https://calculadora-de-iva.es/tags/iva-4' &&
-page !== 'https://calculadora-de-iva.es/tags/iva-10' &&
-page !== 'https://calculadora-de-iva.es/tags/iva-2025' &&
-page !== 'https://calculadora-de-iva.es/tags/iva-alimentos' &&
-page !== 'https://calculadora-de-iva.es/tags/iva-autonomos' &&
-page !== 'https://calculadora-de-iva.es/tags/iva-construccion' &&
-page !== 'https://calculadora-de-iva.es/tags/iva-general' &&
-page !== 'https://calculadora-de-iva.es/tags/iva-intracomunitario' &&
-page !== 'https://calculadora-de-iva.es/tags/iva-reducido' &&
-page !== 'https://calculadora-de-iva.es/tags/iva-superreducido' &&
-page !== 'https://calculadora-de-iva.es/tags/modelo-303' &&
-page !== 'https://calculadora-de-iva.es/tags/obligaciones-fiscales' &&
-page !== 'https://calculadora-de-iva.es/tags/porcentaje-iva' &&
-page !== 'https://calculadora-de-iva.es/tags/precios-alimentos' &&
-page !== 'https://calculadora-de-iva.es/tags/sujeto-pasivo-iva' &&
-page !== 'https://calculadora-de-iva.es/tags/tipos-de-iva'
+        page !== 'https://calculadora-de-iva.es/tags/calculo-iva' &&
+        page !== 'https://calculadora-de-iva.es/tags/cesta-de-la-compra' &&
+        page !== 'https://calculadora-de-iva.es/tags/dia-sin-iva' &&
+        page !== 'https://calculadora-de-iva.es/tags/FFindex' &&
+        page !== 'https://calculadora-de-iva.es/tags/fiscalidad' &&
+        page !== 'https://calculadora-de-iva.es/tags/fiscalidad-espana' &&
+        page !== 'https://calculadora-de-iva.es/tags/guia-iva' &&
+        page !== 'https://calculadora-de-iva.es/tags/impuesto-sobre-el-valor-anadido' &&
+        page !== 'https://calculadora-de-iva.es/tags/impuestos-alimentacion' &&
+        page !== 'https://calculadora-de-iva.es/tags/impuestos-espana' &&
+        page !== 'https://calculadora-de-iva.es/tags/impuestos-turistas-espana' &&
+        page !== 'https://calculadora-de-iva.es/tags/inversion-sujeto-pasivo' &&
+        page !== 'https://calculadora-de-iva.es/tags/iva' &&
+        page !== 'https://calculadora-de-iva.es/tags/iva-4' &&
+        page !== 'https://calculadora-de-iva.es/tags/iva-10' &&
+        page !== 'https://calculadora-de-iva.es/tags/iva-2025' &&
+        page !== 'https://calculadora-de-iva.es/tags/iva-alimentos' &&
+        page !== 'https://calculadora-de-iva.es/tags/iva-autonomos' &&
+        page !== 'https://calculadora-de-iva.es/tags/iva-construccion' &&
+        page !== 'https://calculadora-de-iva.es/tags/iva-general' &&
+        page !== 'https://calculadora-de-iva.es/tags/iva-intracomunitario' &&
+        page !== 'https://calculadora-de-iva.es/tags/iva-reducido' &&
+        page !== 'https://calculadora-de-iva.es/tags/iva-superreducido' &&
+        page !== 'https://calculadora-de-iva.es/tags/modelo-303' &&
+        page !== 'https://calculadora-de-iva.es/tags/obligaciones-fiscales' &&
+        page !== 'https://calculadora-de-iva.es/tags/porcentaje-iva' &&
+        page !== 'https://calculadora-de-iva.es/tags/precios-alimentos' &&
+        page !== 'https://calculadora-de-iva.es/tags/sujeto-pasivo-iva' &&
+        page !== 'https://calculadora-de-iva.es/tags/tipos-de-iva'
     }),
     AutoImport({
       imports: [
