@@ -64,7 +64,7 @@ const pageTitleForLayout = title;
 // 1. Obtiene la URL base del sitio desde astro.config.mjs
 const siteBaseUrl = Astro.site?.toString() || 'http://localhost:4321'; 
 // 2. Construye la URL canónica automatizada usando el slug limpio del autor
-const automatedCanonical = `${siteBaseUrl}/autor/${autor}`; 
+const automatedCanonical = `${siteBaseUrl}autor/${autor}`; 
 // 3. Prioriza la URL canónica del frontmatter del autor, si no, usa la automatizada
 const finalCanonicalUrl = canonical || automatedCanonical; 
 
