@@ -2,7 +2,8 @@
 title: Javier Rodríguez Pérez
 email: contacto@calculadora-de-iva.es
 image: "/images/calculadora-de-iva-es.png"
-description: this is meta description
+description: quizás lo primero que te viene a la cabeza es "el tipo de la Calculadora de IVA"
+noindex: true
 social:
   - name: github
     icon: FaGithub
