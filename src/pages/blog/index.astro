@@ -26,7 +26,7 @@ const postIndex = (await getEntry(
 
 // --- LÓGICA DE URL CANÓNICA Y NOINDEX para la página del blog ---
 // 1. Obtener la URL canónica de la página actual
-const canonicalUrl = Astro.url.href; // Esta es la URL canónica automatizada para esta página.
+const canonicalUrl = "https://calculadora-de-iva.es/blog" // Esta es la URL canónica automatizada para esta página.
 
 // 2. Determinar si esta página debe ser noindex.
 //    Puedes:
@@ -42,10 +42,11 @@ const defaultBlogDescription = "Explora nuestras publicaciones más recientes.";
 const defaultBlogImage = undefined; // O una ruta a una imagen por defecto, ej. '/images/blog-default.webp'
 
 // Usa los valores de postIndex si existen, de lo contrario, usa los por defecto
-const titleForLayout = postIndex?.data.title || defaultBlogTitle;
+const titleForLayout = defaultBlogTitle;
 const metaTitleForLayout = postIndex?.data.meta_title || titleForLayout || defaultBlogMetaTitle;
 const descriptionForLayout = postIndex?.data.description || defaultBlogDescription;
 const imageForLayout = postIndex?.data.image || defaultBlogImage;
+
 
 
 // --- El resto de tu lógica de obtención y ordenación de posts ---
@@ -58,18 +59,21 @@ const sortedPosts = sortByDate(posts);
 const totalPages: number = Math.ceil(posts.length / config.settings.pagination);
 const currentPosts = sortedPosts.slice(0, config.settings.pagination);
 
-
+// --- Props para el BaseLayout ---
+const pageProps = {
+  pageTitle: titleForLayout, // <--- ¡ASEGÚRATE DE PASAR ESTO!
+  title: metaTitleForLayout,
+  meta_title: metaTitleForLayout,
+  image: imageForLayout,
+  description: descriptionForLayout,
+  canonical: canonicalUrl,
+  noindex: noindexPage,
+};
 
 ---
 
 <!-- Pasa los props al BaseLayout -->
-<Base
-  title={metaTitleForLayout}
-  meta_title={metaTitleForLayout}
-  image={imageForLayout}
-  description={descriptionForLayout}
-  canonical={canonicalUrl} 
-  noindex={noindexPage}     
+<Base {...pageProps}
 >
   <PageHeader title={titleForLayout} />
   <section class="section">
