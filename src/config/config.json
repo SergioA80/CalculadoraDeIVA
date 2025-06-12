@@ -3,7 +3,7 @@
     "title": "Calculadora de IVA en España 2025",
     "base_url": "https://calculadora-de-iva.es",
     "base_path": "/",
-    "trailing_slash": false,
+    "trailing_slash": true,
     "favicon": "/images/calculadora-de-iva-es.png",
     "logo": "/images/calculadora-de-iva-es.png",
     "logo_darkmode": "/images/calculadora-de-iva-es.png",

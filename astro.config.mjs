@@ -16,6 +16,9 @@ export default defineConfig({
   trailingSlash: config.site.trailing_slash ? "always" : "never",
   image: { service: sharp() },
   vite: { plugins: [tailwindcss()] },
+  build: {
+    format: 'file', // <--- Configura el formato de salida a 'file'
+  },
   integrations: [
     react(),
     sitemap({
@@ -78,8 +81,8 @@ export default defineConfig({
    // *** ¡NUEVA SECCIÓN DE REDIRECCIONES! ***
   redirects: {
     '/iva-aceite-de-oliva-2024': '/iva-aceite-de-oliva', // Redirección 301 permanente por defecto
-    'iva-de-la-luz-en-2024': 'iva-de-la-luz',
-    'dia-sin-iva-en-mediamarkt-2024': 'dia-sin-iva-en-mediamarkt'
+    '/iva-de-la-luz-en-2024': '/iva-de-la-luz',
+    '/dia-sin-iva-en-mediamarkt-2024': '/dia-sin-iva-en-mediamarkt'
   },
 
   markdown: {
